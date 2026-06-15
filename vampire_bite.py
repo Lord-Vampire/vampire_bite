@@ -1,7 +1,4 @@
-#!/usr/bin/env python3
-# Vampire Bite v38.0 - FINAL COMPLETE ULTIMATE EDITION
 # Author: LORD VAMPIRE (Team Lord)
-# All bugs fixed | Full payloads | Perfect formatting
 
 import subprocess
 import sys
