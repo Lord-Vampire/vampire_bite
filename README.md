@@ -263,12 +263,6 @@ git star https://github.com/Lord-Vampire/Vampire-Bite
 
 ---
 
-## 📜 License
-
-**MIT License** — Free for security research. See [LICENSE](LICENSE) for details.
-
----
-
 **One Bite. One Vulnerability. The Web Bleeds.** 🩸
 
 ---
