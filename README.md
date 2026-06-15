@@ -246,6 +246,29 @@ The author (LORD VAMPIRE) assumes no liability for misuse.
 
 ---
 
+## 💰 Support the Project
+
+If you find Vampire Bite useful, you can support its continued development with cryptocurrency donations.
+
+### Cryptocurrency Addresses
+
+| Network | Address |
+|---------|---------|
+| **TRON (TRC-20)** | `TRVPZZmXwzysR7GccpmhR6Zd4euk5jPvzV` |
+
+> ⚠️ **Important:** Please verify the network before sending. Send only TRON (TRC-20) tokens to this address.
+
+**Supported tokens on TRON:**
+- TRX (TRON)
+- USDT (TRC-20)
+- Any TRC-20 token
+
+---
+
+**Your support keeps the web bleeding.** 🩸
+
+---
+
 ## ⭐ Show Your Support
 
 If this tool helped you find a vulnerability or taught you something new:
@@ -260,6 +283,12 @@ git star https://github.com/Lord-Vampire/Vampire-Bite
 |----------|------|
 | 🐺 GitHub | [@Lord-Vampire](https://github.com/Lord-Vampire) |
 | 📸 Instagram | [@hamiavalofficial](https://instagram.com/hamiavalofficial) |
+
+---
+
+## 📜 License
+
+**MIT License** — Free for security research. See [LICENSE](LICENSE) for details.
 
 ---
 
