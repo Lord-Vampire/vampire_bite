@@ -1,4 +1,3 @@
-
 <div align="center">
 
 # 🧛‍♂️ VAMPIRE BITE
@@ -9,11 +8,10 @@
 [![License](https://img.shields.io/badge/License-MIT-red.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Stable-brightgreen.svg)]()
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Mac-lightgrey.svg)]()
-[![Payloads](https://img.shields.io/badge/Payloads-8000%2B-orange.svg)]()
-[![XSS](https://img.shields.io/badge/XSS-5000%2B-red.svg)]()
-[![SQLi](https://img.shields.io/badge/SQLi-3000%2B-red.svg)]()
+[![Payloads](https://img.shields.io/badge/XSS-1500%2B-orange.svg)]()
+[![SQLi](https://img.shields.io/badge/SQLi-800%2B-red.svg)]()
 
-**Professional Web Security Scanner | 8000+ Payloads | Zero Config | Production Ready**
+**Complete Web Security Scanner | Port Scan | Admin Finder | XSS/SQLi Tester | Auto Payload Generator**
 
 </div>
 
@@ -21,7 +19,17 @@
 
 ## 🩸 What is Vampire Bite?
 
-Vampire Bite is a **professional, production-ready security assessment tool** designed for security researchers, penetration testers, and bug bounty hunters. It combines **5000+ XSS payloads** and **3000+ SQLi payloads** with **multiple detection mechanisms** to find vulnerabilities that other scanners miss.
+Vampire Bite is a **complete, all-in-one security assessment tool** for web applications. It combines:
+- 🔍 **Port scanning**
+- 🖥️ **Server & technology detection**
+- 📁 **Sensitive file finder**
+- 👑 **Admin panel discovery**
+- 📂 **Open directory enumeration**
+- 💀 **Backdoor hunter**
+- 🛡️ **Security headers check**
+- ⚡ **XSS testing (1500+ payloads)**
+- 💉 **SQLi testing (800+ payloads)**
+- 📊 **HTML report generation**
 
 > **One command. One target. The web bleeds.**
 
@@ -31,14 +39,12 @@ Vampire Bite is a **professional, production-ready security assessment tool** de
 
 | Category | Features |
 |----------|----------|
-| **🔍 Network Recon** | • 25+ port scanner with multi-threading<br>• Service detection & banner grabbing<br>• OS fingerprinting (TTL analysis) |
-| **🖥️ Web Discovery** | • Web server detection (Apache/Nginx/LiteSpeed/IIS)<br>• CMS detection (WordPress, Joomla, Drupal, Magento)<br>• Technology stack (PHP, ASP.NET, React, Vue, Angular) |
-| **🛡️ XSS Testing (5000+)** | • Reflected XSS \| DOM XSS \| Blind XSS<br>• Event Handlers \| Tag Breaking \| Encoded Payloads<br>• Polyglot \| HTML5 \| Framework (Angular/React/Vue)<br>• WAF Bypass Techniques |
-| **💉 SQLi Testing (3000+)** | • Error-Based (MySQL/MSSQL/PostgreSQL/Oracle)<br>• Time-Based Blind \| Boolean-Based Blind<br>• Union-Based \| Stacked Queries \| Out-of-Band<br>• Comment Variations \| Case Variations |
-| **🔓 Privilege Escalation** | • Admin panel discovery (45+ paths)<br>• Sensitive file finder (.git/config, .env, backup.sql)<br>• Open directory enumeration<br>• Backdoor detection (web shells, c99, r57) |
-| **💀 Exploit Intelligence** | • Real-time GitHub exploit search<br>• Exploit-DB integration<br>• NVD CVE database lookup<br>• Live PoC links |
-| **📊 Detection Mechanisms** | • Reflection detection \| Error-based detection<br>• Time-based detection \| Boolean-based detection<br>• Union-based detection \| Stacked query detection<br>• DOM analysis \| Banner grabbing |
-| **📋 Reporting** | • Professional HTML reports<br>• JSON export for automation<br>• Real-time color-coded terminal output<br>• Progress indicators |
+| **🔍 Network Recon** | • 25+ port scanner with multi-threading<br>• Service detection & banner grabbing |
+| **🖥️ Web Discovery** | • Web server detection (Apache/Nginx/LiteSpeed/IIS)<br>• Technology stack (PHP, ASP.NET, React, Vue) |
+| **🛡️ Security Headers** | • CSP, HSTS, X-Frame-Options, X-XSS-Protection |
+| **📁 Reconnaissance** | • Sensitive files (robots.txt, .git/config, .env, backup.sql)<br>• Admin panels (45+ paths)<br>• Open directories (/backup, /temp, /uploads)<br>• Backdoors (shell.php, c99.php, r57.php) |
+| **⚡ Vulnerability Testing** | • XSS testing with 1500+ payloads<br>• SQL Injection testing with 800+ payloads<br>• Error-based detection<br>• Time-based blind detection |
+| **📊 Reporting** | • Professional HTML reports<br>• Real-time color-coded terminal output<br>• Progress indicators |
 
 ---
 
@@ -60,22 +66,27 @@ python vampire_bite.py
 
 ```
 ╔════════════════════════════════════════════════════════════════════════════════╗
-║  [1] 🧛‍♂️ VAMPIRE BITE - MEGA SCAN (Full Payload Database)                    ║
-║  [2] 🔍 QUICK SCAN (Forms Only)                                               ║
+║  [1] 🧛‍♂️ VAMPIRE BITE - COMPLETE SCAN (All Features)                         ║
+║  [2] 🔍 QUICK SCAN (Ports + Web Server Only)                                  ║
 ║  [0] 🚪 EXIT                                                                  ║
 ╚════════════════════════════════════════════════════════════════════════════════╝
 ```
 
-### Option 1: MEGA SCAN
-- Extracts all forms from the target
-- Tests **5000+ XSS payloads** with 7 detection mechanisms
-- Tests **3000+ SQLi payloads** with 6 detection mechanisms
-- Generates HTML and JSON reports
-- Shows real-time progress with counters
+### Option 1: COMPLETE SCAN
+- Port scanning (25+ ports)
+- Web server & technology detection
+- Security headers check
+- Sensitive files discovery
+- Admin panel finder
+- Open directory enumeration
+- Backdoor hunter
+- XSS testing (1500+ payloads)
+- SQLi testing (800+ payloads)
+- HTML report generation
 
 ### Option 2: QUICK SCAN
-- Only extracts and displays forms
-- No payload testing
+- Port scanning only
+- Web server detection
 - Fast reconnaissance
 
 ---
@@ -84,98 +95,54 @@ python vampire_bite.py
 
 ```bash
 ┌─[VAMPIRE]~[> 1
-Target URL: http://testphp.vulnweb.com
+Target URL: https://example.com
 
 ==================================================================================
-🧛‍♂️ VAMPIRE BITE MEGA SCAN: http://testphp.vulnweb.com
+🧛‍♂️ VAMPIRE BITE COMPLETE SCAN: https://example.com
 ==================================================================================
 
 ┌─────────────────────────────────────────────────────────────┐
-│  PHASE 1: FORM EXTRACTION                                 │
+│  PHASE 1: PORT SCANNING                                   │
 └─────────────────────────────────────────────────────────────┘
-  [*] Extracting forms...
-      [+] Found 3 forms with 12 inputs
+      🔴 Port 80 [HTTP] OPEN
+      🔴 Port 443 [HTTPS] OPEN
+      🔴 Port 22 [SSH] OPEN
 
 ┌─────────────────────────────────────────────────────────────┐
-│  PHASE 2: XSS TESTING (5000+ PAYLOADS)                     │
+│  PHASE 2: WEB SERVER & TECHNOLOGY                         │
 └─────────────────────────────────────────────────────────────┘
-  [*] Testing Form 1/3
-      [*] Testing XSS on form (5123 payloads)...
-        [*] Progress: 1000/5123 payloads tested
+      [+] Server: nginx/1.24.0
+      [+] PHP detected
+
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 4: RECONNAISSANCE (Files, Admin, Backdoors)        │
+└─────────────────────────────────────────────────────────────┘
+      [!] Found: /robots.txt
+      [✔] ADMIN PANEL: /admin → https://example.com/admin/login
+      [📁] OPEN DIRECTORY: /backup
+      [!] BACKDOOR FOUND: /shell.php
+
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 5: XSS & SQLi TESTING                              │
+└─────────────────────────────────────────────────────────────┘
+      [*] Testing XSS on form (1500+ payloads)...
         [!] XSS FOUND! <script>alert('XSS')</script>
-        [*] Progress: 2000/5123 payloads tested
-        [!] XSS FOUND! <img src=x onerror=alert('XSS')>
-        [*] Completed: 5123/5123 XSS payloads tested
-
-┌─────────────────────────────────────────────────────────────┐
-│  PHASE 3: SQL INJECTION TESTING (3000+ PAYLOADS)           │
-└─────────────────────────────────────────────────────────────┘
-  [*] Testing Form 1/3
-      [*] Testing SQLi on form (3124 payloads)...
-        [*] Progress: 500/3124 payloads tested
         [!] SQLi FOUND! ' OR '1'='1 (evidence: mysql)
-        [*] Progress: 1500/3124 payloads tested
-        [!] TIME-BASED SQLi! Delay: 5.2s
-        [*] Completed: 3124/3124 SQLi payloads tested
 
 ==================================================================================
-📊 VAMPIRE BITE MEGA SUMMARY
+📊 VAMPIRE BITE COMPLETE SUMMARY
 ==================================================================================
-  Target: http://testphp.vulnweb.com
-  Duration: 156.2s
-  Forms Found: 3
-  XSS Payloads Tested: 5123
-  SQLi Payloads Tested: 3124
-
-  🔥 XSS VULNERABLE: 12 found
-    → <script>alert('XSS')</script>
-    → <img src=x onerror=alert('XSS')>
-    → <svg onload=alert('XSS')>
-
-  🔥 SQL INJECTION VULNERABLE: 8 found
-    → ' OR '1'='1 (evidence: mysql)
-    → 1' AND SLEEP(5)-- (delay: 5.2s)
-    → ' UNION SELECT NULL--
+  Target: https://example.com
+  Duration: 45.2s
+  Open Ports: 3
+  Web Server: nginx/1.24.0
+  Technologies: PHP
+  Admin Panels: 1
+  Open Dirs: 1
+  Backdoors: 1
+  XSS Vulnerable: 3
+  SQLi Vulnerable: 2
 ==================================================================================
-```
-
----
-
-## 🛠️ Detection Mechanisms
-
-### XSS Detection (7 Mechanisms)
-
-| Mechanism | Description | Detection Method |
-|-----------|-------------|------------------|
-| **Reflected** | Payload reflected in response | `payload in response.text` |
-| **DOM** | JavaScript execution | `location.hash`, `document.write` |
-| **Event Handler** | HTML events | `onload=`, `onerror=` |
-| **Tag Breaking** | Breaking out of tags | `"><script>` |
-| **Encoded** | URL encoded payloads | `%3Cscript%3E` |
-| **Polyglot** | Multi-context payloads | Combined techniques |
-| **Blind** | Callback to external server | `src=http://evil.com` |
-
-### SQL Injection Detection (6 Mechanisms)
-
-| Mechanism | Description | Detection Method |
-|-----------|-------------|------------------|
-| **Error-Based** | Database error messages | `mysql`, `sql syntax`, `ora-` |
-| **Time-Based** | Response delay | `time.time()` comparison |
-| **Boolean-Based** | True/False response | Compare response length |
-| **Union-Based** | UNION SELECT tests | Response contains column names |
-| **Stacked Queries** | Multiple queries | `; DROP TABLE` |
-| **Out-of-Band** | External communication | `LOAD_FILE` |
-
----
-
-## 📁 Project Structure
-
-```
-Vampire-Bite/
-├── vampire_bite.py          # Main application (8000+ payloads)
-├── README.md                # Documentation
-├── LICENSE                  # MIT License
-└── reports/                 # Generated reports (auto-created)
 ```
 
 ---
@@ -191,30 +158,26 @@ Vampire-Bite/
 
 ---
 
+## 📁 Project Structure
+
+```
+Vampire-Bite/
+├── vampire_bite.py          # Main application
+├── README.md                # Documentation
+└── LICENSE                  # MIT License
+```
+
+> **No external payload files needed.** The tool generates all payloads internally.
+
+---
+
 ## 📊 Payload Statistics
 
-| Category | Count |
-|----------|-------|
-| **XSS Payloads** | **~5,000** |
-| ├─ Basic Script Tags | 50+ |
-| ├─ Event Handlers | 100+ |
-| ├─ Tag Breaking | 50+ |
-| ├─ JavaScript Pseudo | 30+ |
-| ├─ Encoded | 30+ |
-| ├─ DOM XSS | 20+ |
-| ├─ Polyglot | 10+ |
-| ├─ HTML5 | 30+ |
-| ├─ Framework (Angular/React/Vue) | 20+ |
-| └─ WAF Bypass | 50+ |
-| **SQLi Payloads** | **~3,000** |
-| ├─ Error-Based (MySQL/MSSQL/PostgreSQL/Oracle) | 200+ |
-| ├─ Time-Based Blind | 50+ |
-| ├─ Boolean-Based Blind | 50+ |
-| ├─ Union-Based | 50+ |
-| ├─ Stacked Queries | 30+ |
-| ├─ Out-of-Band | 10+ |
-| └─ Comment Variations | 100+ |
-| **Total** | **~8,000+** |
+| Category | Count | Source |
+|----------|-------|--------|
+| **XSS Payloads** | ~1,500 | Auto-generated |
+| **SQLi Payloads** | ~800 | Auto-generated |
+| **Total** | ~2,300 | Internal generator |
 
 ---
 
@@ -256,14 +219,9 @@ If you find Vampire Bite useful, you can support its continued development with 
 |---------|---------|
 | **TRON (TRC-20)** | `TRVPZZmXwzysR7GccpmhR6Zd4euk5jPvzV` |
 
-> ⚠️ **Important:** Please verify the network before sending. Send only TRON (TRC-20) tokens to this address.
+> ⚠️ **Important:** Send only TRON (TRC-20) tokens to this address.
 
-**Supported tokens on TRON:**
-- TRX (TRON)
-- USDT (TRC-20)
----
-
-**Your support keeps the web bleeding.** 🩸
+**Supported tokens:** TRX, USDT (TRC-20), any TRC-20 token
 
 ---
 
@@ -299,4 +257,6 @@ git star https://github.com/Lord-Vampire/Vampire-Bite
 **Built with 🩸 by LORD VAMPIRE | Team Lord**
 
 </div>
-```
+| 5 | بزن **Commit changes** |
+
+تموم شد. 🧛‍♂️🐺
