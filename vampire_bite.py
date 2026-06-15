@@ -1,5 +1,4 @@
 # Author: LORD VAMPIRE (Team Lord)
-# Features: Port Scan | Admin Finder | Backdoor Hunter | XSS/SQLi Tester | Payload Generator
 
 import subprocess
 import sys
@@ -105,7 +104,6 @@ class VampireBiteComplete:
             "sql_vulnerable": [],
             "forms_found": []
         }
-        self.port_results = []
     
     def banner(self):
         print(f"""
@@ -119,9 +117,9 @@ class VampireBiteComplete:
 ║    ╚████╔╝ ██║  ██║██║ ╚═╝ ██║██║     ██║██║  ██║███████╗     ██████╔╝██║   ██║   ███████╗     ║
 ║     ╚═══╝  ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═╝   ╚═╝   ╚══════╝     ║
 ║                                                                                                  ║
-║  {Fore.MAGENTA}🐺 VAMPIRE BITE v35.0 - COMPLETE ULTIMATE EDITION 🧛‍♂️💀{Fore.RED}                              ║
+║  {Fore.MAGENTA}🐺 VAMPIRE BITE v36.0 - COMPLETE ULTIMATE EDITION 🧛‍♂️💀{Fore.RED}                              ║
 ║  {Fore.GREEN}👑 Author: LORD VAMPIRE (Team Lord Leader){Fore.RED}                                             ║
-║  {Fore.CYAN}⚡ Port Scan | Admin Finder | Backdoor Hunter | XSS/SQLi Tester | Payload Generator ⚡{Fore.RED}   ║
+║  {Fore.CYAN}⚡ Fixed Admin Detection | Port Scan | XSS/SQLi | Backdoor Hunter ⚡{Fore.RED}                     ║
 ╚══════════════════════════════════════════════════════════════════════════════════════════════╝{Style.RESET_ALL}
 """)
     
@@ -131,10 +129,6 @@ class VampireBiteComplete:
                    993:"IMAPS",995:"POP3S",1433:"MSSQL",3306:"MySQL",3389:"RDP",
                    5432:"PostgreSQL",5900:"VNC",6379:"Redis",8080:"HTTP-Alt",8443:"HTTPS-Alt",27017:"MongoDB"}
         return services.get(port, "Unknown")
-    
-    # ================================================================
-    # PORT SCANNER
-    # ================================================================
     
     def scan_port(self, ip, port):
         try:
@@ -163,10 +157,6 @@ class VampireBiteComplete:
         
         self.results["open_ports"] = open_ports
         return open_ports
-    
-    # ================================================================
-    # WEB SERVER & TECHNOLOGY DETECTION
-    # ================================================================
     
     def detect_web_server(self, url):
         print(f"\n  {Fore.CYAN}[*] Detecting web server...{Style.RESET_ALL}")
@@ -202,10 +192,6 @@ class VampireBiteComplete:
         except:
             return []
     
-    # ================================================================
-    # SECURITY HEADERS
-    # ================================================================
-    
     def check_security_headers(self, url):
         print(f"\n  {Fore.CYAN}[*] Checking security headers...{Style.RESET_ALL}")
         try:
@@ -221,10 +207,6 @@ class VampireBiteComplete:
                     self.results["security_headers"][h] = False
         except:
             pass
-    
-    # ================================================================
-    # SENSITIVE FILES
-    # ================================================================
     
     def find_sensitive_files(self, url):
         print(f"\n  {Fore.CYAN}[*] Looking for sensitive files...{Style.RESET_ALL}")
@@ -246,36 +228,72 @@ class VampireBiteComplete:
             print(f"      {Fore.GREEN}[-] No sensitive files found{Style.RESET_ALL}")
     
     # ================================================================
-    # ADMIN PANELS
+    # FIXED ADMIN PANEL FINDER - NO DUPLICATES, NO HOMEPAGE
     # ================================================================
     
     def find_admin_panels(self, url):
-        print(f"\n  {Fore.CYAN}[*] Hunting for admin panels...{Style.RESET_ALL}")
+        print(f"\n  {Fore.CYAN}[*] Hunting for real admin panels...{Style.RESET_ALL}")
+        
         paths = ["/admin", "/administrator", "/wp-admin", "/login", "/cpanel", "/dashboard",
-                "/admin/login", "/backend", "/controlpanel", "/manage"]
+                "/admin/login", "/backend", "/controlpanel", "/manage", "/admincp", 
+                "/cp", "/manager", "/webadmin", "/sysadmin", "/adminarea"]
+        
         found = []
+        seen_urls = set()
+        
+        # Get homepage content for comparison
+        try:
+            home_r = self.session.get(url, timeout=5)
+            home_content = home_r.text
+            home_length = len(home_content)
+        except:
+            home_content = ""
+            home_length = 0
+        
         for path in paths:
             try:
                 test_url = f"{url.rstrip('/')}{path}"
+                
+                # Follow redirects but track final URL
                 r = self.session.get(test_url, timeout=5, allow_redirects=True)
+                final_url = r.url
+                
+                # Skip if redirected to homepage
+                if final_url == url or final_url == url + "/" or final_url.rstrip('/') == url.rstrip('/'):
+                    continue
+                
+                # Skip duplicate URLs
+                if final_url in seen_urls:
+                    continue
+                
+                # Check if content is different from homepage
+                if len(r.text) == home_length and r.text == home_content:
+                    continue
+                
+                seen_urls.add(final_url)
+                
+                # Determine panel type
                 if r.status_code == 200:
-                    keywords = ['login', 'username', 'password', 'admin', 'dashboard']
+                    keywords = ['login', 'username', 'password', 'admin', 'dashboard', 'control', 'panel']
                     if any(k in r.text.lower() for k in keywords):
-                        found.append({"path": path, "url": r.url, "type": "Admin Panel with Login"})
-                        print(f"      {Fore.RED}[✔] ADMIN PANEL: {path} → {r.url}{Style.RESET_ALL}")
+                        found.append({"path": path, "url": final_url, "type": "Admin Panel with Login"})
+                        print(f"      {Fore.RED}[✔] ADMIN PANEL: {path} → {final_url}{Style.RESET_ALL}")
+                    else:
+                        found.append({"path": path, "url": final_url, "type": "Admin Panel (No Login Form)"})
+                        print(f"      {Fore.YELLOW}[?] Admin area: {path} → {final_url}{Style.RESET_ALL}")
+                        
                 elif r.status_code in [401, 403]:
-                    found.append({"path": path, "url": test_url, "type": "Authentication Required"})
-                    print(f"      {Fore.RED}[!] {path} - AUTH REQUIRED (REAL ADMIN!){Style.RESET_ALL}")
+                    found.append({"path": path, "url": final_url, "type": "Authentication Required"})
+                    print(f"      {Fore.RED}[!] {path} - AUTH REQUIRED (Protected Admin!){Style.RESET_ALL}")
+                    
                 time.sleep(0.05)
             except:
                 pass
+        
         self.results["admin_panels"] = found
         if not found:
             print(f"      {Fore.GREEN}[-] No admin panels found{Style.RESET_ALL}")
-    
-    # ================================================================
-    # OPEN DIRECTORIES
-    # ================================================================
+        return found
     
     def find_open_directories(self, url):
         print(f"\n  {Fore.CYAN}[*] Looking for open directories...{Style.RESET_ALL}")
@@ -301,10 +319,6 @@ class VampireBiteComplete:
         if not found:
             print(f"      {Fore.GREEN}[-] No open directories found{Style.RESET_ALL}")
     
-    # ================================================================
-    # BACKDOORS
-    # ================================================================
-    
     def find_backdoors(self, url):
         print(f"\n  {Fore.CYAN}[*] Hunting for backdoors...{Style.RESET_ALL}")
         backdoors = ["/shell.php", "/cmd.php", "/c99.php", "/r57.php", "/webshell.php", "/backdoor.php"]
@@ -322,10 +336,6 @@ class VampireBiteComplete:
         self.results["backdoors"] = found
         if not found:
             print(f"      {Fore.GREEN}[-] No backdoors found{Style.RESET_ALL}")
-    
-    # ================================================================
-    # FORM EXTRACTION
-    # ================================================================
     
     def extract_forms(self, url):
         print(f"\n  {Fore.CYAN}[*] Extracting forms from {url}...{Style.RESET_ALL}")
@@ -354,10 +364,6 @@ class VampireBiteComplete:
         except Exception as e:
             print(f"      {Fore.RED}[!] Error: {e}{Style.RESET_ALL}")
             return []
-    
-    # ================================================================
-    # XSS TESTING
-    # ================================================================
     
     def test_xss_on_form(self, url, form):
         vulnerabilities = []
@@ -389,10 +395,6 @@ class VampireBiteComplete:
         
         print(f"\n        {Fore.CYAN}[*] Completed XSS testing{Style.RESET_ALL}")
         return vulnerabilities
-    
-    # ================================================================
-    # SQLi TESTING
-    # ================================================================
     
     def test_sqli_on_form(self, url, form):
         vulnerabilities = []
@@ -436,10 +438,6 @@ class VampireBiteComplete:
         print(f"\n        {Fore.CYAN}[*] Completed SQLi testing{Style.RESET_ALL}")
         return vulnerabilities
     
-    # ================================================================
-    # FULL SCAN
-    # ================================================================
-    
     def full_scan(self, target):
         self.start_time = time.time()
         self.results["target"] = target
@@ -475,12 +473,12 @@ class VampireBiteComplete:
         print(f"{Fore.MAGENTA}└─────────────────────────────────────────────────────────────┘{Style.RESET_ALL}")
         self.check_security_headers(target)
         
-        # PHASE 4: FILES, DIRS, ADMIN, BACKDOORS
+        # PHASE 4: RECON
         print(f"\n{Fore.MAGENTA}┌─────────────────────────────────────────────────────────────┐{Style.RESET_ALL}")
         print(f"{Fore.MAGENTA}│  PHASE 4: RECONNAISSANCE (Files, Admin, Backdoors)        │{Style.RESET_ALL}")
         print(f"{Fore.MAGENTA}└─────────────────────────────────────────────────────────────┘{Style.RESET_ALL}")
         self.find_sensitive_files(target)
-        self.find_admin_panels(target)
+        self.find_admin_panels(target)  # FIXED VERSION
         self.find_open_directories(target)
         self.find_backdoors(target)
         
@@ -522,6 +520,12 @@ class VampireBiteComplete:
         print(f"  {Fore.RED}XSS Vulnerable: {len(all_xss)}{Style.RESET_ALL}")
         print(f"  {Fore.RED}SQLi Vulnerable: {len(all_sqli)}{Style.RESET_ALL}")
         
+        # Show real admin panels found
+        if self.results['admin_panels']:
+            print(f"\n  {Fore.RED}📋 REAL ADMIN PANELS:{Style.RESET_ALL}")
+            for ap in self.results['admin_panels']:
+                print(f"    {Fore.RED}→ {ap['url']} ({ap['type']}){Style.RESET_ALL}")
+        
         self.generate_html_report(target)
         print(f"\n  {Fore.GREEN}[+] HTML Report: vampire_bite_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html{Style.RESET_ALL}")
         print(f"{Fore.CYAN}{'='*90}{Style.RESET_ALL}\n")
@@ -554,12 +558,13 @@ th {{ background: #f00; color: #fff; }}
 <p><strong>Duration:</strong> {self.results['duration']}s</p>
 
 <h2>🔌 OPEN PORTS ({len(self.results['open_ports'])})</h2>
-<table><tr><th>Port</th><th>Service</th></tr>
+<table>
+<tr><th>Port</th><th>Service</th></tr>
 {''.join([f"<tr><td class='critical'>{p}</td><td>{self.get_service_name(p)}</td></tr>" for p in self.results['open_ports']])}
 </table>
 
 <h2>👑 ADMIN PANELS ({len(self.results['admin_panels'])})</h2>
-{''.join([f"<div style='background:#111; padding:5px; margin:5px 0;'><a href='{a['url']}' style='color:#0f0;'>{a['url']}</a></div>" for a in self.results['admin_panels']])}
+{''.join([f"<div style='background:#111; padding:5px; margin:5px 0;'><a href='{a['url']}' style='color:#0f0;'>{a['url']}</a> - {a['type']}</div>" for a in self.results['admin_panels']])}
 
 <h2>💀 BACKDOORS ({len(self.results['backdoors'])})</h2>
 {''.join([f"<div style='background:#111; padding:5px; margin:5px 0;'><a href='{b['url']}' style='color:#f00;'>{b['file']}</a></div>" for b in self.results['backdoors']])}
