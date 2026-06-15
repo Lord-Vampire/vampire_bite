@@ -51,10 +51,10 @@ No manual dependency installation required. The tool auto-installs everything.
 
 💀 Menu
 ╔════════════════════════════════════════════════════════════════════════════════╗
-║  [1] 🧛‍♂️ VAMPIRE BITE - FULL SCAN                                              ║
-║  [2] 🔍 QUICK SCAN                                                              ║
-║  [3] 🌐 ONLINE EXPLOIT SEARCH ONLY                                              ║
-║  [0] 🚪 EXIT                                                                    ║
+║  [1] 🧛‍♂️ VAMPIRE BITE - FULL SCAN                                               ║
+║  [2] 🔍 QUICK SCAN                                                             ║
+║  [3] 🌐 ONLINE EXPLOIT SEARCH ONLY                                             ║
+║  [0] 🚪 EXIT                                                                   ║
 ╚════════════════════════════════════════════════════════════════════════════════╝
 📊 Example Output
 text
