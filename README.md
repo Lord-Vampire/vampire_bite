@@ -20,10 +20,10 @@
 ## 🩸 What is Vampire Bite?
 
 Vampire Bite is a **complete, all-in-one security assessment tool** for web applications. It combines:
-- 🔍 **Port scanning**
+- 🔍 **Port scanning** (25+ ports)
 - 🖥️ **Server & technology detection**
 - 📁 **Sensitive file finder**
-- 👑 **Admin panel discovery**
+- 👑 **Admin panel discovery** (Fixed - No duplicates, follows redirects)
 - 📂 **Open directory enumeration**
 - 💀 **Backdoor hunter**
 - 🛡️ **Security headers check**
@@ -42,7 +42,7 @@ Vampire Bite is a **complete, all-in-one security assessment tool** for web appl
 | **🔍 Network Recon** | • 25+ port scanner with multi-threading<br>• Service detection & banner grabbing |
 | **🖥️ Web Discovery** | • Web server detection (Apache/Nginx/LiteSpeed/IIS)<br>• Technology stack (PHP, ASP.NET, React, Vue) |
 | **🛡️ Security Headers** | • CSP, HSTS, X-Frame-Options, X-XSS-Protection |
-| **📁 Reconnaissance** | • Sensitive files (robots.txt, .git/config, .env, backup.sql)<br>• Admin panels (45+ paths)<br>• Open directories (/backup, /temp, /uploads)<br>• Backdoors (shell.php, c99.php, r57.php) |
+| **📁 Reconnaissance** | • Sensitive files (robots.txt, .git/config, .env, backup.sql)<br>• Admin panels (45+ paths with redirect following)<br>• Open directories (/backup, /temp, /uploads)<br>• Backdoors (shell.php, c99.php, r57.php) |
 | **⚡ Vulnerability Testing** | • XSS testing with 1500+ payloads<br>• SQL Injection testing with 800+ payloads<br>• Error-based detection<br>• Time-based blind detection |
 | **📊 Reporting** | • Professional HTML reports<br>• Real-time color-coded terminal output<br>• Progress indicators |
 
@@ -77,7 +77,7 @@ python vampire_bite.py
 - Web server & technology detection
 - Security headers check
 - Sensitive files discovery
-- Admin panel finder
+- Admin panel finder (with redirect following, no duplicates)
 - Open directory enumeration
 - Backdoor hunter
 - XSS testing (1500+ payloads)
@@ -88,6 +88,17 @@ python vampire_bite.py
 - Port scanning only
 - Web server detection
 - Fast reconnaissance
+
+---
+
+## ✨ What's New in v36
+
+| Improvement | Description |
+|-------------|-------------|
+| **Fixed Admin Panel Detection** | No more duplicate or fake admin panels |
+| **Redirect Following** | Follows redirects to find real admin panel URLs |
+| **Homepage Filter** | Homepage is no longer reported as an admin panel |
+| **Duplicate Prevention** | Same URL won't appear multiple times |
 
 ---
 
@@ -205,7 +216,6 @@ The author (LORD VAMPIRE) assumes no liability for misuse.
 
 - GitHub: [@Lord-Vampire](https://github.com/Lord-Vampire)
 - Instagram: [@hamiavalofficial](https://instagram.com/hamiavalofficial)
-- Project: [Vampire Bite](https://github.com/Lord-Vampire/Vampire-Bite)
 
 ---
 
@@ -242,6 +252,12 @@ git star https://github.com/Lord-Vampire/Vampire-Bite
 
 ---
 
+## 📜 License
+
+**MIT License** — Free for security research. See [LICENSE](LICENSE) for details.
+
+---
+
 **One Bite. One Vulnerability. The Web Bleeds.** 🩸
 
 ---
@@ -251,3 +267,6 @@ git star https://github.com/Lord-Vampire/Vampire-Bite
 **Built with 🩸 by LORD VAMPIRE | Team Lord**
 
 </div>
+| **جدید** | v36 + Fixed Admin Detection + Redirect Following + No Duplicates |
+
+حالا میتونی این README جدید رو توی گیت‌هات ب
