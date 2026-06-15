@@ -1,23 +1,3 @@
-README شما ساختار خوبی داره، اما مشکلات کوچکی در قالب‌بندی (Markdown) و محتوا وجود دارد که با رفع آن‌ها، حرفه‌ای‌تر و خوانا‌تر می‌شود.
-
-### 🛠️ فهرست مشکلات و راه‌حل‌ها
-
-| دسته | مشکل | راه‌حل و توضیح |
-| :--- | :--- | :--- |
-| **قالب‌بندی** | شماره‌گذاری خودکار در بخش "Features" به درستی نمایش داده نمی‌شود. | از نشانه‌گذاری (`-`) استفاده کنید. (رفع شد) |
-| **قالب‌بندی** | در بخش "Detection Mechanisms"، توضیحات توی یک خط قرار گرفته و قابل خواندن نیست. | از جداول یا لیست‌های تو در تو استفاده کنید. (رفع شد) |
-| **قالب‌بندی** | بخش "Payload Statistics" نظم جدولی خود را از دست داده است. | ساختار جدول را اصلاح کنید. (رفع شد) |
-| **قالب‌بندی** | بخش "Author" شامل کدهای خام نشان (badge) است. | آن‌ها را با نشانی‌های اینترنتی (URL) صحیح جایگزین کنید. (رفع شد) |
-| **محتوا** | تاریخ در لایسنس (Copyright) خالی است. | یک سال (مثلاً `2024`) برای کپی‌رایت اضافه کنید. (رفع شد) |
-| **محتوا** | پیوند (لینک) پروژه در بخش "Show Your Support" ناقص است. | آن را به نشانی مخزن خود تغییر دهید. (رفع شد) |
-
----
-
-### ✅ نسخه اصلاح‌شده README (قابل کپی)
-
-در این نسخه، تمام مشکلات بالا حل شده است. می‌توانید آن را کپی و جایگزین فایل قبلی کنید.
-
-```markdown
 <div align="center">
 
 # 🧛‍♂️ VAMPIRE BITE
@@ -69,39 +49,35 @@ Vampire Bite is a **professional, production-ready security assessment tool** de
 git clone https://github.com/Lord-Vampire/Vampire-Bite.git
 cd Vampire-Bite
 python vampire_bite.py
-```
+No manual dependency installation required. The tool auto-installs everything on first run.
 
-> **No manual dependency installation required.** The tool auto-installs everything on first run.
-
----
-
-## 💀 Menu Options
-
-```
+💀 Menu Options
+text
 ╔════════════════════════════════════════════════════════════════════════════════╗
 ║  [1] 🧛‍♂️ VAMPIRE BITE - MEGA SCAN (Full Payload Database)                    ║
 ║  [2] 🔍 QUICK SCAN (Forms Only)                                               ║
 ║  [0] 🚪 EXIT                                                                  ║
 ╚════════════════════════════════════════════════════════════════════════════════╝
-```
+Option 1: MEGA SCAN
+Extracts all forms from the target
 
-### Option 1: MEGA SCAN
-- Extracts all forms from the target
-- Tests **5000+ XSS payloads** with 7 detection mechanisms
-- Tests **3000+ SQLi payloads** with 6 detection mechanisms
-- Generates HTML and JSON reports
-- Shows real-time progress with counters
+Tests 5000+ XSS payloads with 7 detection mechanisms
 
-### Option 2: QUICK SCAN
-- Only extracts and displays forms
-- No payload testing
-- Fast reconnaissance
+Tests 3000+ SQLi payloads with 6 detection mechanisms
 
----
+Generates HTML and JSON reports
 
-## 📊 Example Output
+Shows real-time progress with counters
 
-```bash
+Option 2: QUICK SCAN
+Only extracts and displays forms
+
+No payload testing
+
+Fast reconnaissance
+
+📊 Example Output
+bash
 ┌─[VAMPIRE]~[> 1
 Target URL: http://testphp.vulnweb.com
 
@@ -156,84 +132,74 @@ Target URL: http://testphp.vulnweb.com
     → 1' AND SLEEP(5)-- (delay: 5.2s)
     → ' UNION SELECT NULL--
 ==================================================================================
-```
+🛠️ Detection Mechanisms
+XSS Detection (7 Mechanisms):
 
----
+Reflected: payload in response.text
 
-## 🛠️ Detection Mechanisms
+DOM: Checks for location.hash, document.write
 
-**XSS Detection (7 Mechanisms):**
-- **Reflected**: `payload in response.text`
-- **DOM**: Checks for `location.hash`, `document.write`
-- **Event Handler**: Scans for `onload=`, `onerror=`
-- **Tag Breaking**: Uses patterns like `"><script>`
-- **Encoded**: Tests `%3Cscript%3E` and similar
-- **Polyglot**: Employs multi-context payloads
-- **Blind**: Tries callbacks to an external server (`src=http://evil.com`)
+Event Handler: Scans for onload=, onerror=
 
-**SQL Injection Detection (6 Mechanisms):**
-- **Error-Based**: Looks for `mysql`, `sql syntax`, `ora-` in responses
-- **Time-Based**: Measures response delay using `time.time()`
-- **Boolean-Based**: Compares response length for True/False conditions
-- **Union-Based**: Checks responses for `UNION SELECT` artifacts
-- **Stacked Queries**: Tests for `; DROP TABLE` and similar
-- **Out-of-Band**: Uses `LOAD_FILE` for external communication
+Tag Breaking: Uses patterns like "><script>
 
----
+Encoded: Tests %3Cscript%3E and similar
 
-## 📁 Project Structure
+Polyglot: Employs multi-context payloads
 
-```
+Blind: Tries callbacks to an external server (src=http://evil.com)
+
+SQL Injection Detection (6 Mechanisms):
+
+Error-Based: Looks for mysql, sql syntax, ora- in responses
+
+Time-Based: Measures response delay using time.time()
+
+Boolean-Based: Compares response length for True/False conditions
+
+Union-Based: Checks responses for UNION SELECT artifacts
+
+Stacked Queries: Tests for ; DROP TABLE and similar
+
+Out-of-Band: Uses LOAD_FILE for external communication
+
+📁 Project Structure
+text
 Vampire-Bite/
 ├── vampire_bite.py          # Main application (8000+ payloads)
 ├── README.md                # Documentation
 ├── LICENSE                  # MIT License
 └── reports/                 # Generated reports (auto-created)
-```
-
----
-
-## 🔧 Requirements (Auto-Installed)
-
-| Dependency | Purpose |
-|------------|---------|
-| Python 3.7+ | Core runtime |
-| requests | HTTP requests |
-| colorama | Terminal colors |
-| beautifulsoup4 | HTML parsing |
-
----
-
-## 📊 Payload Statistics
-
-| Category | Count |
-|----------|-------|
-| **XSS Payloads** | **~5,000** |
-| ├─ Basic Script Tags | 50+ |
-| ├─ Event Handlers | 100+ |
-| ├─ Tag Breaking | 50+ |
-| ├─ JavaScript Pseudo | 30+ |
-| ├─ Encoded | 30+ |
-| ├─ DOM XSS | 20+ |
-| ├─ Polyglot | 10+ |
-| ├─ HTML5 | 30+ |
-| ├─ Framework | 20+ |
-| └─ WAF Bypass | 50+ |
-| **SQLi Payloads** | **~3,000** |
-| ├─ Error-Based | 200+ |
-| ├─ Time-Based Blind | 50+ |
-| ├─ Boolean-Based Blind | 50+ |
-| ├─ Union-Based | 50+ |
-| ├─ Stacked Queries | 30+ |
-| ├─ Out-of-Band | 10+ |
-| └─ Comment Variations | 100+ |
-| **Total** | **~8,000+** |
-
----
-
-## ⚠️ Legal Disclaimer
-
-```
+🔧 Requirements (Auto-Installed)
+Dependency	Purpose
+Python 3.7+	Core runtime
+requests	HTTP requests
+colorama	Terminal colors
+beautifulsoup4	HTML parsing
+📊 Payload Statistics
+Category	Count
+XSS Payloads	~5,000
+├─ Basic Script Tags	50+
+├─ Event Handlers	100+
+├─ Tag Breaking	50+
+├─ JavaScript Pseudo	30+
+├─ Encoded	30+
+├─ DOM XSS	20+
+├─ Polyglot	10+
+├─ HTML5	30+
+├─ Framework	20+
+└─ WAF Bypass	50+
+SQLi Payloads	~3,000
+├─ Error-Based	200+
+├─ Time-Based Blind	50+
+├─ Boolean-Based Blind	50+
+├─ Union-Based	50+
+├─ Stacked Queries	30+
+├─ Out-of-Band	10+
+└─ Comment Variations	100+
+Total	~8,000+
+⚠️ Legal Disclaimer
+text
 THIS SOFTWARE IS PROVIDED FOR EDUCATIONAL AND AUTHORIZED SECURITY TESTING ONLY.
 
 By using this tool, you agree to:
@@ -242,59 +208,34 @@ By using this tool, you agree to:
 - Accept full responsibility for any damage or consequences
 
 The author (LORD VAMPIRE) assumes no liability for misuse.
-```
+👑 Author
+LORD VAMPIRE — Team Lord Leader
 
----
+https://img.shields.io/badge/GitHub-Lord--Vampire-black?logo=github&style=for-the-badge
+https://img.shields.io/badge/Instagram-@hamiavalofficial-purple?logo=instagram&style=for-the-badge
 
-## 👑 Author
+GitHub: @Lord-Vampire
 
-**LORD VAMPIRE** — Team Lord Leader
+Instagram: @hamiavalofficial
 
-[![GitHub](https://img.shields.io/badge/GitHub-Lord--Vampire-black?logo=github&style=for-the-badge)](https://github.com/Lord-Vampire)
-[![Instagram](https://img.shields.io/badge/Instagram-@hamiavalofficial-purple?logo=instagram&style=for-the-badge)](https://instagram.com/hamiavalofficial)
+Project: Vampire Bite
 
-- GitHub: [@Lord-Vampire](https://github.com/Lord-Vampire)
-- Instagram: [@hamiavalofficial](https://instagram.com/hamiavalofficial)
-- Project: [Vampire Bite](https://github.com/Lord-Vampire/Vampire-Bite)
-
----
-
-## ⭐ Show Your Support
-
+⭐ Show Your Support
 If this tool helped you find a vulnerability or taught you something new:
 
-```bash
+bash
 git star https://github.com/Lord-Vampire/Vampire-Bite
-```
+Follow me on GitHub and Instagram for more security tools and updates!
 
-**Follow me on GitHub and Instagram for more security tools and updates!**
+Platform	Link
+🐺 GitHub	@Lord-Vampire
+📸 Instagram	@hamiavalofficial
+📜 License
+MIT License — Free for security research. See LICENSE for details.
 
-| Platform | Link |
-|----------|------|
-| 🐺 GitHub | [@Lord-Vampire](https://github.com/Lord-Vampire) |
-| 📸 Instagram | [@hamiavalofficial](https://instagram.com/hamiavalofficial) |
-
----
-
-## 📜 License
-
-**MIT License** — Free for security research. See [LICENSE](LICENSE) for details.
-
----
-
-**One Bite. One Vulnerability. The Web Bleeds.** 🩸
-
----
+One Bite. One Vulnerability. The Web Bleeds. 🩸
 
 <div align="center">
+Built with 🩸 by LORD VAMPIRE | Team Lord
 
-**Built with 🩸 by LORD VAMPIRE | Team Lord**
-
-</div>
-```
-
----
- کنید.
-3.  یک پیام Commit (مانند `docs: improve README formatting and fix links`) وارد کرده و تغییرات را ذخیره کنید (`Commit changes`).
-
-با انجام این کار، صفحه README شما مرتب، حرفه‌ای و عاری از خطاهای بصری خواهد شد. اگر باز هم سوالی داشتید، در خدمت شما هستم.
+</div> ```
