@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-# Vampire Bite v35.0 - COMPLETE ULTIMATE EDITION (All Features)
+
 # Author: LORD VAMPIRE (Team Lord)
 # Features: Port Scan | Admin Finder | Backdoor Hunter | XSS/SQLi Tester | Payload Generator
 
