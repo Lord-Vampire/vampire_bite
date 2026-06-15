@@ -133,36 +133,23 @@ Target URL: http://testphp.vulnweb.com
     → ' UNION SELECT NULL--
 ==================================================================================
 🛠️ Detection Mechanisms
-XSS Detection (7 Mechanisms):
-
-Reflected: payload in response.text
-
-DOM: Checks for location.hash, document.write
-
-Event Handler: Scans for onload=, onerror=
-
-Tag Breaking: Uses patterns like <script>
-
-Encoded: Tests %3Cscript%3E and similar
-
-Polyglot: Employs multi-context payloads
-
-Blind: Tries callbacks to an external server (src=http://evil.com)
-
-SQL Injection Detection (6 Mechanisms):
-
-Error-Based: Looks for mysql, sql syntax, ora- in responses
-
-Time-Based: Measures response delay using time.time()
-
-Boolean-Based: Compares response length for True/False conditions
-
-Union-Based: Checks responses for UNION SELECT artifacts
-
-Stacked Queries: Tests for ; DROP TABLE and similar
-
-Out-of-Band: Uses LOAD_FILE for external communication
-
+XSS Detection (7 Mechanisms)
+Mechanism	Description	Detection Method
+Reflected	Payload reflected in response	payload in response.text
+DOM	JavaScript execution	location.hash, document.write
+Event Handler	HTML events	onload=, onerror=
+Tag Breaking	Breaking out of tags	"><script>
+Encoded	URL encoded payloads	%3Cscript%3E
+Polyglot	Multi-context payloads	Combined techniques
+Blind	Callback to external server	src=http://evil.com
+SQL Injection Detection (6 Mechanisms)
+Mechanism	Description	Detection Method
+Error-Based	Database error messages	mysql, sql syntax, ora-
+Time-Based	Response delay	time.time() comparison
+Boolean-Based	True/False response	Compare response length
+Union-Based	UNION SELECT tests	Response contains column names
+Stacked Queries	Multiple queries	; DROP TABLE
+Out-of-Band	External communication	LOAD_FILE
 📁 Project Structure
 text
 Vampire-Bite/
@@ -187,10 +174,10 @@ XSS Payloads	~5,000
 ├─ DOM XSS	20+
 ├─ Polyglot	10+
 ├─ HTML5	30+
-├─ Framework	20+
+├─ Framework (Angular/React/Vue)	20+
 └─ WAF Bypass	50+
 SQLi Payloads	~3,000
-├─ Error-Based	200+
+├─ Error-Based (MySQL/MSSQL/PostgreSQL/Oracle)	200+
 ├─ Time-Based Blind	50+
 ├─ Boolean-Based Blind	50+
 ├─ Union-Based	50+
