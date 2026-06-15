@@ -141,7 +141,7 @@ DOM: Checks for location.hash, document.write
 
 Event Handler: Scans for onload=, onerror=
 
-Tag Breaking: Uses patterns like "><script>
+Tag Breaking: Uses patterns like <script>
 
 Encoded: Tests %3Cscript%3E and similar
 
