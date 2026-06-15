@@ -1,8 +1,4 @@
-#!/usr/bin/env python3
-# Vampire Bite v30.0 - MEGA ULTIMATE EDITION
 # Author: LORD VAMPIRE (Team Lord)
-# 5000+ XSS Payloads | 3000+ SQLi Payloads | Full Database
-
 import subprocess
 import sys
 import os
