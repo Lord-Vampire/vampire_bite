@@ -1,4 +1,3 @@
-
 # Author: LORD VAMPIRE (Team Lord)
 # Features: Port Scan | Admin Finder | Backdoor Hunter | XSS/SQLi Tester | Payload Generator
 
