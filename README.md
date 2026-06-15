@@ -267,6 +267,5 @@ git star https://github.com/Lord-Vampire/Vampire-Bite
 **Built with 🩸 by LORD VAMPIRE | Team Lord**
 
 </div>
-| **جدید** | v36 + Fixed Admin Detection + Redirect Following + No Duplicates |
 
 حالا میتونی این README جدید رو توی گیت‌هات ب
