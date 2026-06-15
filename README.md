@@ -267,5 +267,3 @@ git star https://github.com/Lord-Vampire/Vampire-Bite
 **Built with 🩸 by LORD VAMPIRE | Team Lord**
 
 </div>
-
-حالا میتونی این README جدید رو توی گیت‌هات ب
