@@ -261,8 +261,6 @@ If you find Vampire Bite useful, you can support its continued development with 
 **Supported tokens on TRON:**
 - TRX (TRON)
 - USDT (TRC-20)
-- Any TRC-20 token
-
 ---
 
 **Your support keeps the web bleeding.** 🩸
