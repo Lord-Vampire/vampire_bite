@@ -1,280 +1,311 @@
-<div align="center">
 
-# 🧛‍♂️ VAMPIRE BITE
+# 🧛 Vampire Bite
 
-### *One Bite. One Vulnerability. The Web Bleeds.*
+**Vampire Bite** - Ultimate Web Application Security Scanner
 
-[![Python](https://img.shields.io/badge/Python-3.7+-blue.svg)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-red.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Stable-brightgreen.svg)]()
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Mac-lightgrey.svg)]()
-[![Version](https://img.shields.io/badge/Version-47.0-purple.svg)]()
-[![Payloads](https://img.shields.io/badge/Adaptive_Payloads-Yes-orange.svg)]()
-[![WAF](https://img.shields.io/badge/WAF_Detection-Yes-red.svg)]()
-
-**Professional Web Security Scanner | Smart Crawler | Adaptive Payloads | WAF Detection**
-
-</div>
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-3.0-red.svg)](https://github.com/lord-vampire/vampire_bite)
 
 ---
 
-## 🩸 What is Vampire Bite?
+## 📋 Table of Contents
 
-Vampire Bite is a **professional-grade security assessment tool** for web applications. It combines:
-- 🔍 **Smart Crawler** - automatically discovers all input points
-- 🎯 **Adaptive Payloads** - context-aware XSS and database-specific SQLi
-- 🛡️ **WAF Detection** - identifies Cloudflare, ModSecurity, and more
-- 📊 **Professional Reports** - HTML and JSON formats
-- ⚡ **Multi-threading** - fast port scanning
-- 🧠 **Technology Detection** - CMS, framework, language, database
-
-> **One command. One target. The web bleeds.**
-
----
-
-## ⚡ Features
-
-| Category | Features |
-|----------|----------|
-| **🔍 Network Recon** | • 25+ port scanner with multi-threading<br>• Service detection & banner grabbing |
-| **🕷️ Smart Crawler** | • Automatic form extraction<br>• URL parameter discovery<br>• Endpoint detection<br>• Link crawling |
-| **🖥️ Tech Detection** | • Web server detection (Apache/Nginx/LiteSpeed/IIS)<br>• CMS detection (WordPress, Joomla, Drupal)<br>• Framework detection (React, Vue, Angular)<br>• Language detection (PHP, ASP.NET, Java)<br>• Database detection (MySQL, PostgreSQL, MSSQL) |
-| **🛡️ WAF Detection** | • Cloudflare<br>• ModSecurity<br>• AWS WAF<br>• Sucuri<br>• Akamai<br>• Imperva<br>• F5<br>• Barracuda<br>• Wordfence |
-| **⚡ Adaptive XSS** | • Context-aware payloads (HTML, Attribute, URL, JSON, XML)<br>• WAF bypass techniques<br>• Multiple encoding<br>• Case variations |
-| **💉 Adaptive SQLi** | • Database-specific payloads (MySQL, MSSQL, PostgreSQL, Oracle, SQLite)<br>• Error-based detection<br>• Time-based blind detection<br>• Boolean-based detection<br>• Union-based detection |
-| **📊 Reporting** | • Professional HTML reports<br>• JSON export for automation<br>• Real-time color-coded terminal output<br>• Progress indicators |
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Command Line Arguments](#command-line-arguments)
+- [Scan Phases](#scan-phases)
+- [Output Formats](#output-formats)
+- [Screenshots](#screenshots)
+- [Contributing](#contributing)
+- [Disclaimer](#disclaimer)
+- [License](#license)
 
 ---
 
-## 🚀 Quick Start
+## 🎯 Introduction
 
-### One-Line Installation
+Vampire Bite is a comprehensive web application security scanner designed for penetration testing and vulnerability assessment. It detects a wide range of security issues in web applications, APIs, and network infrastructure.
 
+**Repository:** [github.com/lord-vampire/vampire_bite](https://github.com/lord-vampire/vampire_bite)
+
+---
+
+## ✨ Features
+
+### Web Application Security
+- **XSS** - Cross-Site Scripting (Reflected, Stored, DOM-based, Polyglot)
+- **SQL Injection** - Error-based, UNION, Time-based, Boolean-based
+- **LFI/RFI** - Local/Remote File Inclusion
+- **SSRF** - Server-Side Request Forgery
+- **XXE** - XML External Entity
+- **CSRF** - Cross-Site Request Forgery
+- **IDOR** - Insecure Direct Object Reference
+- **Command Injection** - OS Command Injection
+- **Open Redirect** - URL Redirection
+
+### Authentication & Session
+- **JWT Analysis** - Weak algorithms, sensitive data exposure
+- **Session Security** - Cookie attributes, SameSite
+- **CORS** - Cross-Origin Resource Sharing misconfigurations
+
+### SSL/TLS Analysis
+- Weak cipher detection
+- Certificate validation
+- Protocol vulnerability testing (SSLv2, SSLv3, TLS 1.0/1.1)
+
+### Network Scanning
+- **TCP/UDP Port Scanning**
+- Service detection
+- OS fingerprinting
+- Banner grabbing
+
+### Reconnaissance
+- Subdomain enumeration
+- Technology fingerprinting (30+ frameworks)
+- Content discovery (directories, files, admin panels)
+- Web crawling with JavaScript rendering
+
+### API Security
+- REST API testing
+- GraphQL introspection
+- WebSocket security
+
+### Advanced Features
+- **WAF Evasion** - Encoding, case variation, comment injection
+- **Headless Browser Verification** - Confirm XSS with Selenium
+- **False Positive Reduction** - Confidence scoring
+- **Resume Capability** - State persistence
+- **Multi-threading** - Thread-safe operations
+- **Rate Limiting** - Adaptive delays
+
+---
+
+## 🚀 Installation
+
+### Prerequisites
+- Python 3.8+
+- pip
+
+### Quick Install (Auto)
 ```bash
-git clone https://github.com/Lord-Vampire/Vampire-Bite.git
-cd Vampire-Bite
-python vampire_bite.py
+# Clone repository
+git clone https://github.com/lord-vampire/vampire_bite.git
+cd vampire_bite
+
+# Auto-install dependencies
+python req.py
 ```
 
-> **No manual dependency installation required.** The tool auto-installs everything on first run.
-
----
-
-## 💀 Menu Options
-
-```
-╔════════════════════════════════════════════════════════════════════════════════╗
-║  [1] 🧛‍♂️ VAMPIRE BITE PRO - Complete Scan (Best)                            ║
-║  [2] 🔍 Quick Scan (Ports + Server Only)                                     ║
-║  [0] 🚪 Exit                                                                 ║
-╚════════════════════════════════════════════════════════════════════════════════╝
-```
-
-### Option 1: PRO COMPLETE SCAN
-- **Phase 1:** Port scanning (25+ ports)
-- **Phase 2:** WAF detection
-- **Phase 3:** Technology detection
-- **Phase 4:** Smart crawling (finds all forms, parameters, endpoints)
-- **Phase 5:** Adaptive vulnerability testing (XSS + SQLi)
-- **Phase 6:** HTML + JSON report generation
-
-### Option 2: QUICK SCAN
-- Port scanning only
-- Web server detection
-- Fast reconnaissance
-
----
-
-## 📊 Example Output
-
+### Manual Install
 ```bash
-┌─[VAMPIRE]~[> 1
-Target URL: https://example.com
+pip install requests colorama beautifulsoup4 lxml tldextract \
+    dnspython cryptography pyOpenSSL selenium webdriver-manager \
+    websocket-client reportlab Jinja2 fake-useragent
+```
 
-==================================================================================
-🧛‍♂️ VAMPIRE BITE PRO SCAN: https://example.com
-==================================================================================
-
-┌─────────────────────────────────────────────────────────────┐
-│  PHASE 1/6: PORT SCANNING                                   │
-└─────────────────────────────────────────────────────────────┘
-      🔴 Port 80 [HTTP] OPEN
-      🔴 Port 443 [HTTPS] OPEN
-
-┌─────────────────────────────────────────────────────────────┐
-│  PHASE 2/6: WAF DETECTION                                   │
-└─────────────────────────────────────────────────────────────┘
-      [WAF] Detected: Cloudflare
-      [WAF] Using bypass techniques...
-
-┌─────────────────────────────────────────────────────────────┐
-│  PHASE 3/6: TECHNOLOGY DETECTION                            │
-└─────────────────────────────────────────────────────────────┘
-      [WEB] Server: nginx/1.24.0
-      [TECH] PHP detected
-      [TECH] WordPress detected
-      [TECH] MySQL detected
-
-┌─────────────────────────────────────────────────────────────┐
-│  PHASE 4/6: SMART CRAWLING                                  │
-└─────────────────────────────────────────────────────────────┘
-      [CRAWL] Found form: https://example.com/login.php
-      [CRAWL] Found form: https://example.com/search
-      [CRAWL] Found 3 forms, 5 parameters, 2 endpoints
-
-┌─────────────────────────────────────────────────────────────┐
-│  PHASE 5/6: ADAPTIVE VULNERABILITY TESTING                  │
-└─────────────────────────────────────────────────────────────┘
-      [TEST] Testing form: https://example.com/login.php
-        [XSS] 💀 Found in username: <script>alert(1)</script>
-        [SQLi] 💀 Found in username: ' OR '1'='1 (evidence: mysql)
-
-==================================================================================
-📊 SCAN COMPLETE!
-==================================================================================
-  Target: https://example.com
-  Duration: 45.2s
-  Open Ports: 2
-  Web Server: nginx/1.24.0
-  Technologies: PHP, WordPress, MySQL
-  WAF Detected: Cloudflare
-  Forms Found: 3
-  XSS Vulnerable: 2
-  SQLi Vulnerable: 1
-==================================================================================
+### Verify Installation
+```bash
+python -m py_compile vampire_bite_fixed.py
 ```
 
 ---
 
-## 🔧 Requirements (Auto-Installed)
+## 📖 Usage
 
-| Dependency | Purpose |
-|------------|---------|
-| Python 3.7+ | Core runtime |
-| requests | HTTP requests |
-| colorama | Terminal colors |
-| beautifulsoup4 | HTML parsing |
-| urllib3 | HTTP connection |
+### Basic Scan
+```bash
+python vampire_bite_fixed.py https://target.com
+```
+
+### Advanced Scan
+```bash
+python vampire_bite_fixed.py https://target.com \
+    --waf-evasion \
+    --verify-vulns \
+    --delay 1.5 \
+    --js-rendering
+```
+
+### With Proxy (Burp Suite)
+```bash
+python vampire_bite_fixed.py https://target.com \
+    --proxy http://127.0.0.1:8080
+```
+
+### Custom Headers & Cookies
+```bash
+python vampire_bite_fixed.py https://target.com \
+    --cookies "session=abc123;token=xyz" \
+    --headers '{"X-API-Key": "secret"}'
+```
+
+### Fast Scan (Skip Heavy Operations)
+```bash
+python vampire_bite_fixed.py https://target.com \
+    --no-port-scan \
+    --no-subdomains \
+    --no-content
+```
+
+### Deep Scan
+```bash
+python vampire_bite_fixed.py https://target.com \
+    --js-rendering \
+    --crawl-depth 5 \
+    --max-urls 1000 \
+    --verify-vulns
+```
+
+---
+
+## ⚙️ Command Line Arguments
+
+| Argument | Description | Default |
+|----------|-------------|---------|
+| `target` | Target URL (required) | - |
+| `--delay` | Request delay (seconds) | 1.0 |
+| `--timeout` | HTTP timeout | 10.0 |
+| `--port-timeout` | Port scan timeout | 2.0 |
+| `--max-workers` | Max threads | 100 |
+| `--ports` | Custom ports to scan | Common ports |
+| `--scan-type` | Port scan type (syn/tcp/udp) | tcp |
+| `--proxy` | Proxy URL | - |
+| `--cookies` | Cookies string | - |
+| `--headers` | Custom headers JSON | - |
+| `--user-agent` | Custom User-Agent | Random |
+| `--crawl-depth` | Crawl depth | 3 |
+| `--max-urls` | Max URLs to crawl | 500 |
+| `--verify-vulns` | Verify with headless browser | False |
+| `--waf-evasion` | Enable WAF evasion | False |
+| `--js-rendering` | Enable JavaScript rendering | False |
+| `--verify-ssl` | Verify SSL certificates | False |
+| `--no-port-scan` | Skip port scan | False |
+| `--no-subdomains` | Skip subdomain enum | False |
+| `--no-content` | Skip content discovery | False |
+| `--no-vulns` | Skip vulnerability scan | False |
+| `--no-forms` | Skip form analysis | False |
+| `--test-rfi` | Test RFI (needs external server) | False |
+| `--output-dir` | Output directory | . |
+
+---
+
+## 🔍 Scan Phases
+
+```
+Phase 1: Reconnaissance & DNS Enumeration
+    ├── Hostname resolution
+    ├── DNS records (A, AAAA, MX, NS, TXT, SOA, CNAME)
+    └── SSL/TLS analysis
+
+Phase 2: Advanced Port Scanning
+    ├── TCP/UDP scanning
+    ├── Service detection
+    └── Banner grabbing
+
+Phase 3: Subdomain Enumeration
+    └── 500+ common subdomains
+
+Phase 4: Content Discovery
+    ├── Sensitive files (.env, .git, backup, etc.)
+    ├── Admin panels
+    └── Open directories
+
+Phase 5: Web Crawling & Form Analysis
+    ├── JavaScript rendering (optional)
+    ├── Form extraction
+    └── API endpoint discovery
+
+Phase 6: Comprehensive Vulnerability Scanning
+    ├── XSS (URL params, forms, DOM)
+    ├── SQL Injection
+    ├── LFI/RFI
+    ├── SSRF
+    ├── Command Injection
+    ├── XXE
+    ├── CSRF
+    ├── IDOR
+    ├── Open Redirect
+    ├── JWT/CORS
+    └── Security headers
+```
+
+---
+
+## 📊 Output Formats
+
+Reports are automatically generated in multiple formats:
+
+| Format | File | Description |
+|--------|------|-------------|
+| **HTML** | `vampire_bite_report_*.html` | Beautiful interactive report |
+| **JSON** | `vampire_bite_report_*.json` | Machine-readable data |
+| **XML** | `vampire_bite_report_*.xml` | Import to other tools |
+| **CSV** | `vampire_bite_report_*.csv` | Spreadsheet analysis |
+| **PDF** | `vampire_bite_report_*.pdf` | Professional document |
 
 ---
 
 ## 📁 Project Structure
 
 ```
-Vampire-Bite/
-├── vampire_bite.py          # Main application
-├── README.md                # Documentation
-└── LICENSE                  # MIT License
-```
-
-> **No external payload files needed.** The tool generates all payloads dynamically based on context.
-
----
-
-## 📊 Adaptive Testing
-
-### XSS Contexts
-
-| Context | Description | Example Payload |
-|---------|-------------|-----------------|
-| **HTML** | Inside HTML tags | `<svg/onload=alert(1)>` |
-| **Attribute** | Inside HTML attributes | `" onmouseover=alert(1) "` |
-| **URL** | Inside URL | `javascript:alert(1)` |
-| **JSON** | Inside JSON data | `{"key":"<script>alert(1)</script>"}` |
-| **XML** | Inside XML | `<![CDATA[<script>alert(1)</script>]]>` |
-
-### SQLi Database Types
-
-| Database | Specific Payloads |
-|----------|-------------------|
-| **MySQL** | `UNION SELECT @@version`, `LOAD_FILE()` |
-| **MSSQL** | `WAITFOR DELAY`, `xp_cmdshell` |
-| **PostgreSQL** | `pg_sleep()`, `CAST()` |
-| **Oracle** | `CTXSYS.DRITHSX.SN`, `UTL_INADDR` |
-| **SQLite** | `UNION SELECT sql FROM sqlite_master` |
-
----
-
-## 🛡️ WAF Detection
-
-| WAF | Signatures |
-|-----|------------|
-| Cloudflare | `cf-ray`, `__cfduid` |
-| ModSecurity | `modsecurity`, `owasp` |
-| AWS WAF | `x-amzn-requestid` |
-| Sucuri | `sucuri`, `x-sucuri-id` |
-| Akamai | `akamai`, `x-akamai` |
-| Imperva | `imperva`, `incapsula` |
-| F5 | `f5`, `big-ip` |
-| Wordfence | `wordfence`, `wf-` |
-
----
-
-## ⚠️ Legal Disclaimer
-
-```
-THIS SOFTWARE IS PROVIDED FOR EDUCATIONAL AND AUTHORIZED SECURITY TESTING ONLY.
-
-By using this tool, you agree to:
-- Only scan systems you own or have explicit written permission to test
-- Comply with all applicable laws and regulations
-- Accept full responsibility for any damage or consequences
-
-The author (LORD VAMPIRE) assumes no liability for misuse.
+vampire_bite/
+├── vampire_bite_fixed.py      # Main scanner script
+├── vampire_payloads.json      # Attack payloads database
+├── req.py                     # Dependency installer
+├── requirements.txt           # Python dependencies
+├── README.md                  # This file
+└── LICENSE                    # MIT License
 ```
 
 ---
 
-## 👑 Author
+## 🤝 Contributing
 
-**LORD VAMPIRE** — Team Lord Leader
+Contributions are welcome! Please:
 
-[![GitHub](https://img.shields.io/badge/GitHub-Lord--Vampire-black?logo=github&style=for-the-badge)](https://github.com/Lord-Vampire)
-[![Instagram](https://img.shields.io/badge/Instagram-@hamiavalofficial-purple?logo=instagram&style=for-the-badge)](https://instagram.com/hamiavalofficial)
-
-- GitHub: [@Lord-Vampire](https://github.com/Lord-Vampire)
-- Instagram: [@hamiavalofficial](https://instagram.com/hamiavalofficial)
-
----
-
-## 💰 Support the Project
-
-### Cryptocurrency Addresses
-
-| Network | Address |
-|---------|---------|
-| **TRON (TRC-20)** | `TRVPZZmXwzysR7GccpmhR6Zd4euk5jPvzV` |
-
-> ⚠️ Send only TRON (TRC-20) tokens: TRX, USDT, or any TRC-20 token.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ---
 
-## ⭐ Show Your Support
+## ⚠️ Disclaimer
 
-```bash
-git star https://github.com/Lord-Vampire/Vampire-Bite
-```
+**This tool is for authorized security testing only.**
 
-| Platform | Link |
-|----------|------|
-| 🐺 GitHub | [@Lord-Vampire](https://github.com/Lord-Vampire) |
-| 📸 Instagram | [@hamiavalofficial](https://instagram.com/hamiavalofficial) |
+- Always obtain **explicit written permission** before scanning
+- Use with caution on production systems
+- The authors are not responsible for misuse or damage
+- Respect rate limits and be polite to target servers
+
+**Illegal use is strictly prohibited.**
 
 ---
 
 ## 📜 License
 
-**MIT License** — Free for security research. See [LICENSE](LICENSE) for details.
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-**One Bite. One Vulnerability. The Web Bleeds.** 🩸
+## 🙏 Acknowledgments
+
+- OWASP Testing Guide
+- PortSwigger Web Security Academy
+- SQLMap Project
+- Nmap Project
 
 ---
 
 <div align="center">
 
-**Built with 🩸 by LORD VAMPIRE | Team Lord**
+**Made with ❤️ by Security Research Team**
+
+[⭐ Star this repo](https://github.com/lord-vampire/vampire_bite) if you find it useful!
 
 </div>
----
