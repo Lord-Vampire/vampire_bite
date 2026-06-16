@@ -252,10 +252,9 @@ Reports are automatically generated in multiple formats:
 
 ```
 vampire_bite/
-├── vampire_bite_fixed.py      # Main scanner script
+├── vampire_bite.py      # Main scanner script
 ├── vampire_payloads.json      # Attack payloads database
 ├── req.py                     # Dependency installer
-├── requirements.txt           # Python dependencies
 ├── README.md                  # This file
 └── LICENSE                    # MIT License
 ```
