@@ -278,5 +278,3 @@ git star https://github.com/Lord-Vampire/Vampire-Bite
 
 </div>
 ---
-
-## ✅ تفا
