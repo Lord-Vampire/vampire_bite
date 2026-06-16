@@ -108,7 +108,7 @@ pip install requests colorama beautifulsoup4 lxml tldextract \
 
 ### Verify Installation
 ```bash
-python -m py_compile vampire_bite_fixed.py
+python -m py_compile vampire_bite.py
 ```
 
 ---
@@ -117,12 +117,12 @@ python -m py_compile vampire_bite_fixed.py
 
 ### Basic Scan
 ```bash
-python vampire_bite_fixed.py https://target.com
+python vampire_bite.py https://target.com
 ```
 
 ### Advanced Scan
 ```bash
-python vampire_bite_fixed.py https://target.com \
+python vampire_bite.py https://target.com \
     --waf-evasion \
     --verify-vulns \
     --delay 1.5 \
@@ -131,20 +131,20 @@ python vampire_bite_fixed.py https://target.com \
 
 ### With Proxy (Burp Suite)
 ```bash
-python vampire_bite_fixed.py https://target.com \
+python vampire_bite.py https://target.com \
     --proxy http://127.0.0.1:8080
 ```
 
 ### Custom Headers & Cookies
 ```bash
-python vampire_bite_fixed.py https://target.com \
+python vampire_bite.py https://target.com \
     --cookies "session=abc123;token=xyz" \
     --headers '{"X-API-Key": "secret"}'
 ```
 
 ### Fast Scan (Skip Heavy Operations)
 ```bash
-python vampire_bite_fixed.py https://target.com \
+python vampire_bite.py https://target.com \
     --no-port-scan \
     --no-subdomains \
     --no-content
@@ -152,7 +152,7 @@ python vampire_bite_fixed.py https://target.com \
 
 ### Deep Scan
 ```bash
-python vampire_bite_fixed.py https://target.com \
+python vampire_bite.py https://target.com \
     --js-rendering \
     --crawl-depth 5 \
     --max-urls 1000 \
