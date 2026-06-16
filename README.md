@@ -8,10 +8,11 @@
 [![License](https://img.shields.io/badge/License-MIT-red.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Stable-brightgreen.svg)]()
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Mac-lightgrey.svg)]()
-[![Payloads](https://img.shields.io/badge/XSS-1500%2B-orange.svg)]()
-[![SQLi](https://img.shields.io/badge/SQLi-800%2B-red.svg)]()
+[![Version](https://img.shields.io/badge/Version-47.0-purple.svg)]()
+[![Payloads](https://img.shields.io/badge/Adaptive_Payloads-Yes-orange.svg)]()
+[![WAF](https://img.shields.io/badge/WAF_Detection-Yes-red.svg)]()
 
-**Complete Web Security Scanner | Port Scan | Admin Finder | XSS/SQLi Tester | Auto Payload Generator**
+**Professional Web Security Scanner | Smart Crawler | Adaptive Payloads | WAF Detection**
 
 </div>
 
@@ -19,17 +20,13 @@
 
 ## 🩸 What is Vampire Bite?
 
-Vampire Bite is a **complete, all-in-one security assessment tool** for web applications. It combines:
-- 🔍 **Port scanning** (25+ ports)
-- 🖥️ **Server & technology detection**
-- 📁 **Sensitive file finder**
-- 👑 **Admin panel discovery** (Fixed - No duplicates, follows redirects)
-- 📂 **Open directory enumeration**
-- 💀 **Backdoor hunter**
-- 🛡️ **Security headers check**
-- ⚡ **XSS testing (1500+ payloads)**
-- 💉 **SQLi testing (800+ payloads)**
-- 📊 **HTML report generation**
+Vampire Bite is a **professional-grade security assessment tool** for web applications. It combines:
+- 🔍 **Smart Crawler** - automatically discovers all input points
+- 🎯 **Adaptive Payloads** - context-aware XSS and database-specific SQLi
+- 🛡️ **WAF Detection** - identifies Cloudflare, ModSecurity, and more
+- 📊 **Professional Reports** - HTML and JSON formats
+- ⚡ **Multi-threading** - fast port scanning
+- 🧠 **Technology Detection** - CMS, framework, language, database
 
 > **One command. One target. The web bleeds.**
 
@@ -40,11 +37,12 @@ Vampire Bite is a **complete, all-in-one security assessment tool** for web appl
 | Category | Features |
 |----------|----------|
 | **🔍 Network Recon** | • 25+ port scanner with multi-threading<br>• Service detection & banner grabbing |
-| **🖥️ Web Discovery** | • Web server detection (Apache/Nginx/LiteSpeed/IIS)<br>• Technology stack (PHP, ASP.NET, React, Vue) |
-| **🛡️ Security Headers** | • CSP, HSTS, X-Frame-Options, X-XSS-Protection |
-| **📁 Reconnaissance** | • Sensitive files (robots.txt, .git/config, .env, backup.sql)<br>• Admin panels (45+ paths with redirect following)<br>• Open directories (/backup, /temp, /uploads)<br>• Backdoors (shell.php, c99.php, r57.php) |
-| **⚡ Vulnerability Testing** | • XSS testing with 1500+ payloads<br>• SQL Injection testing with 800+ payloads<br>• Error-based detection<br>• Time-based blind detection |
-| **📊 Reporting** | • Professional HTML reports<br>• Real-time color-coded terminal output<br>• Progress indicators |
+| **🕷️ Smart Crawler** | • Automatic form extraction<br>• URL parameter discovery<br>• Endpoint detection<br>• Link crawling |
+| **🖥️ Tech Detection** | • Web server detection (Apache/Nginx/LiteSpeed/IIS)<br>• CMS detection (WordPress, Joomla, Drupal)<br>• Framework detection (React, Vue, Angular)<br>• Language detection (PHP, ASP.NET, Java)<br>• Database detection (MySQL, PostgreSQL, MSSQL) |
+| **🛡️ WAF Detection** | • Cloudflare<br>• ModSecurity<br>• AWS WAF<br>• Sucuri<br>• Akamai<br>• Imperva<br>• F5<br>• Barracuda<br>• Wordfence |
+| **⚡ Adaptive XSS** | • Context-aware payloads (HTML, Attribute, URL, JSON, XML)<br>• WAF bypass techniques<br>• Multiple encoding<br>• Case variations |
+| **💉 Adaptive SQLi** | • Database-specific payloads (MySQL, MSSQL, PostgreSQL, Oracle, SQLite)<br>• Error-based detection<br>• Time-based blind detection<br>• Boolean-based detection<br>• Union-based detection |
+| **📊 Reporting** | • Professional HTML reports<br>• JSON export for automation<br>• Real-time color-coded terminal output<br>• Progress indicators |
 
 ---
 
@@ -66,39 +64,24 @@ python vampire_bite.py
 
 ```
 ╔════════════════════════════════════════════════════════════════════════════════╗
-║  [1] 🧛‍♂️ VAMPIRE BITE - COMPLETE SCAN (All Features)                         ║
-║  [2] 🔍 QUICK SCAN (Ports + Web Server Only)                                  ║
-║  [0] 🚪 EXIT                                                                  ║
+║  [1] 🧛‍♂️ VAMPIRE BITE PRO - Complete Scan (Best)                            ║
+║  [2] 🔍 Quick Scan (Ports + Server Only)                                     ║
+║  [0] 🚪 Exit                                                                 ║
 ╚════════════════════════════════════════════════════════════════════════════════╝
 ```
 
-### Option 1: COMPLETE SCAN
-- Port scanning (25+ ports)
-- Web server & technology detection
-- Security headers check
-- Sensitive files discovery
-- Admin panel finder (with redirect following, no duplicates)
-- Open directory enumeration
-- Backdoor hunter
-- XSS testing (1500+ payloads)
-- SQLi testing (800+ payloads)
-- HTML report generation
+### Option 1: PRO COMPLETE SCAN
+- **Phase 1:** Port scanning (25+ ports)
+- **Phase 2:** WAF detection
+- **Phase 3:** Technology detection
+- **Phase 4:** Smart crawling (finds all forms, parameters, endpoints)
+- **Phase 5:** Adaptive vulnerability testing (XSS + SQLi)
+- **Phase 6:** HTML + JSON report generation
 
 ### Option 2: QUICK SCAN
 - Port scanning only
 - Web server detection
 - Fast reconnaissance
-
----
-
-## ✨ What's New in v36
-
-| Improvement | Description |
-|-------------|-------------|
-| **Fixed Admin Panel Detection** | No more duplicate or fake admin panels |
-| **Redirect Following** | Follows redirects to find real admin panel URLs |
-| **Homepage Filter** | Homepage is no longer reported as an admin panel |
-| **Duplicate Prevention** | Same URL won't appear multiple times |
 
 ---
 
@@ -109,50 +92,55 @@ python vampire_bite.py
 Target URL: https://example.com
 
 ==================================================================================
-🧛‍♂️ VAMPIRE BITE COMPLETE SCAN: https://example.com
+🧛‍♂️ VAMPIRE BITE PRO SCAN: https://example.com
 ==================================================================================
 
 ┌─────────────────────────────────────────────────────────────┐
-│  PHASE 1: PORT SCANNING                                   │
+│  PHASE 1/6: PORT SCANNING                                   │
 └─────────────────────────────────────────────────────────────┘
       🔴 Port 80 [HTTP] OPEN
       🔴 Port 443 [HTTPS] OPEN
-      🔴 Port 22 [SSH] OPEN
 
 ┌─────────────────────────────────────────────────────────────┐
-│  PHASE 2: WEB SERVER & TECHNOLOGY                         │
+│  PHASE 2/6: WAF DETECTION                                   │
 └─────────────────────────────────────────────────────────────┘
-      [+] Server: nginx/1.24.0
-      [+] PHP detected
+      [WAF] Detected: Cloudflare
+      [WAF] Using bypass techniques...
 
 ┌─────────────────────────────────────────────────────────────┐
-│  PHASE 4: RECONNAISSANCE (Files, Admin, Backdoors)        │
+│  PHASE 3/6: TECHNOLOGY DETECTION                            │
 └─────────────────────────────────────────────────────────────┘
-      [!] Found: /robots.txt
-      [✔] ADMIN PANEL: /admin → https://example.com/admin/login
-      [📁] OPEN DIRECTORY: /backup
-      [!] BACKDOOR FOUND: /shell.php
+      [WEB] Server: nginx/1.24.0
+      [TECH] PHP detected
+      [TECH] WordPress detected
+      [TECH] MySQL detected
 
 ┌─────────────────────────────────────────────────────────────┐
-│  PHASE 5: XSS & SQLi TESTING                              │
+│  PHASE 4/6: SMART CRAWLING                                  │
 └─────────────────────────────────────────────────────────────┘
-      [*] Testing XSS on form (1500+ payloads)...
-        [!] XSS FOUND! <script>alert('XSS')</script>
-        [!] SQLi FOUND! ' OR '1'='1 (evidence: mysql)
+      [CRAWL] Found form: https://example.com/login.php
+      [CRAWL] Found form: https://example.com/search
+      [CRAWL] Found 3 forms, 5 parameters, 2 endpoints
+
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 5/6: ADAPTIVE VULNERABILITY TESTING                  │
+└─────────────────────────────────────────────────────────────┘
+      [TEST] Testing form: https://example.com/login.php
+        [XSS] 💀 Found in username: <script>alert(1)</script>
+        [SQLi] 💀 Found in username: ' OR '1'='1 (evidence: mysql)
 
 ==================================================================================
-📊 VAMPIRE BITE COMPLETE SUMMARY
+📊 SCAN COMPLETE!
 ==================================================================================
   Target: https://example.com
   Duration: 45.2s
-  Open Ports: 3
+  Open Ports: 2
   Web Server: nginx/1.24.0
-  Technologies: PHP
-  Admin Panels: 1
-  Open Dirs: 1
-  Backdoors: 1
-  XSS Vulnerable: 3
-  SQLi Vulnerable: 2
+  Technologies: PHP, WordPress, MySQL
+  WAF Detected: Cloudflare
+  Forms Found: 3
+  XSS Vulnerable: 2
+  SQLi Vulnerable: 1
 ==================================================================================
 ```
 
@@ -166,6 +154,7 @@ Target URL: https://example.com
 | requests | HTTP requests |
 | colorama | Terminal colors |
 | beautifulsoup4 | HTML parsing |
+| urllib3 | HTTP connection |
 
 ---
 
@@ -178,17 +167,46 @@ Vampire-Bite/
 └── LICENSE                  # MIT License
 ```
 
-> **No external payload files needed.** The tool generates all payloads internally.
+> **No external payload files needed.** The tool generates all payloads dynamically based on context.
 
 ---
 
-## 📊 Payload Statistics
+## 📊 Adaptive Testing
 
-| Category | Count | Source |
-|----------|-------|--------|
-| **XSS Payloads** | ~1,500 | Auto-generated |
-| **SQLi Payloads** | ~800 | Auto-generated |
-| **Total** | ~2,300 | Internal generator |
+### XSS Contexts
+
+| Context | Description | Example Payload |
+|---------|-------------|-----------------|
+| **HTML** | Inside HTML tags | `<svg/onload=alert(1)>` |
+| **Attribute** | Inside HTML attributes | `" onmouseover=alert(1) "` |
+| **URL** | Inside URL | `javascript:alert(1)` |
+| **JSON** | Inside JSON data | `{"key":"<script>alert(1)</script>"}` |
+| **XML** | Inside XML | `<![CDATA[<script>alert(1)</script>]]>` |
+
+### SQLi Database Types
+
+| Database | Specific Payloads |
+|----------|-------------------|
+| **MySQL** | `UNION SELECT @@version`, `LOAD_FILE()` |
+| **MSSQL** | `WAITFOR DELAY`, `xp_cmdshell` |
+| **PostgreSQL** | `pg_sleep()`, `CAST()` |
+| **Oracle** | `CTXSYS.DRITHSX.SN`, `UTL_INADDR` |
+| **SQLite** | `UNION SELECT sql FROM sqlite_master` |
+
+---
+
+## 🛡️ WAF Detection
+
+| WAF | Signatures |
+|-----|------------|
+| Cloudflare | `cf-ray`, `__cfduid` |
+| ModSecurity | `modsecurity`, `owasp` |
+| AWS WAF | `x-amzn-requestid` |
+| Sucuri | `sucuri`, `x-sucuri-id` |
+| Akamai | `akamai`, `x-akamai` |
+| Imperva | `imperva`, `incapsula` |
+| F5 | `f5`, `big-ip` |
+| Wordfence | `wordfence`, `wf-` |
 
 ---
 
@@ -221,29 +239,21 @@ The author (LORD VAMPIRE) assumes no liability for misuse.
 
 ## 💰 Support the Project
 
-If you find Vampire Bite useful, you can support its continued development with cryptocurrency donations.
-
 ### Cryptocurrency Addresses
 
 | Network | Address |
 |---------|---------|
 | **TRON (TRC-20)** | `TRVPZZmXwzysR7GccpmhR6Zd4euk5jPvzV` |
 
-> ⚠️ **Important:** Send only TRON (TRC-20) tokens to this address.
-
-**Supported tokens:** TRX, USDT (TRC-20), any TRC-20 token
+> ⚠️ Send only TRON (TRC-20) tokens: TRX, USDT, or any TRC-20 token.
 
 ---
 
 ## ⭐ Show Your Support
 
-If this tool helped you find a vulnerability or taught you something new:
-
 ```bash
 git star https://github.com/Lord-Vampire/Vampire-Bite
 ```
-
-**Follow me on GitHub and Instagram for more security tools and updates!**
 
 | Platform | Link |
 |----------|------|
@@ -267,3 +277,6 @@ git star https://github.com/Lord-Vampire/Vampire-Bite
 **Built with 🩸 by LORD VAMPIRE | Team Lord**
 
 </div>
+---
+
+## ✅ تفا
