@@ -5,7 +5,6 @@
 ### *One Bite. One Vulnerability. The Web Bleeds.*
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-red.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Stable-brightgreen.svg)]()
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Mac-lightgrey.svg)]()
 [![Version](https://img.shields.io/badge/Version-3.0-purple.svg)]()
